@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical } from "lucide-react";
+import { saveQuiz } from "@/lib/quiz-storage";
 
 type QuizState = {
   situation: string;
@@ -29,9 +30,11 @@ const initialPriorities = [
 
 const Quiz = () => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const initialMode = params.get("mode"); // "personal" | "caregiver" | null
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<QuizState>({
-    situation: "",
+    situation: initialMode === "caregiver" ? "someone" : initialMode === "personal" ? "myself" : "",
     hasDiagnosis: "",
     diagnosis: "",
     sensitiveTopics: [],
@@ -69,14 +72,19 @@ const Quiz = () => {
     }
   };
 
+  const finishQuiz = () => {
+    saveQuiz({
+      situation: (answers.situation as "myself" | "someone" | ""),
+      sensitiveTopics: answers.sensitiveTopics,
+      priorities: answers.priorities,
+      isCaregiver: isCareAbout,
+    });
+    navigate(`/tailored?mode=${isCareAbout ? "caregiver" : "personal"}`);
+  };
+
   const handleNext = () => {
-    if (step === 6 && !isCareAbout) {
-      // Quiz complete
-      navigate("/");
-      return;
-    }
-    if (step === 7 || (step === 6 && !isCareAbout)) {
-      navigate("/");
+    if ((step === 6 && !isCareAbout) || step === 7) {
+      finishQuiz();
       return;
     }
     setStep(step + 1);
