@@ -30,10 +30,17 @@ export const loadQuiz = (): StoredQuiz | null => {
 // Build the ordered list of section ids from quiz priorities, with any
 // missing sections appended in the fixed order so we always render all 6.
 export const orderedSectionIds = (priorities: string[]): SectionId[] => {
-  const mapped = priorities
-    .map((p) => PRIORITY_TO_SECTION[p])
-    .filter((s): s is SectionId => Boolean(s));
-  const seen = new Set(mapped);
+  const mapped: SectionId[] = [];
+  const seen = new Set<SectionId>();
+  for (const p of priorities) {
+    const ids = PRIORITY_TO_SECTION[p] ?? [];
+    for (const id of ids) {
+      if (!seen.has(id)) {
+        mapped.push(id);
+        seen.add(id);
+      }
+    }
+  }
   for (const s of FIXED_ORDER) if (!seen.has(s)) mapped.push(s);
   return mapped;
 };
