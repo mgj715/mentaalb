@@ -95,7 +95,7 @@ export const PERSONAL_SECTIONS: Record<SectionId, Section> = {
   },
   caregiver: {
     id: "caregiver",
-    title: "Caregiver Support",
+    title: "Small Circle",
     icon: "heart",
     items: [
       { title: "Support groups", description: "Connect with others caring for a loved one." },
