@@ -30,14 +30,14 @@ export type Section = {
   footer?: { label: string; href?: string };
 };
 
-// Maps a quiz priority label -> section id (drives ordering on /tailored)
-export const PRIORITY_TO_SECTION: Record<string, SectionId> = {
-  "Understanding what's going on": "resources",
-  "Practical tools and exercises": "tools",
-  "Activities to feel better": "activities",
-  "Resources and information": "professional",
-  "Peer stories and experiences": "forums",
-  "Support for caregivers": "caregiver",
+// Maps a quiz priority label -> one or more section ids (drives ordering on /tailored).
+// Peer stories surfaces both Forums and Small Circle, since both are community-driven.
+export const PRIORITY_TO_SECTION: Record<string, SectionId[]> = {
+  "Understanding what's going on": ["resources"],
+  "Practical tools and exercises": ["tools"],
+  "Activities to feel better": ["activities"],
+  "Resources and information": ["professional"],
+  "Peer stories and experiences": ["forums", "caregiver"],
 };
 
 // Personal-mode content
