@@ -30,7 +30,7 @@ const Tailored = () => {
       <main className="flex-1 px-5 py-6 space-y-8">
         <div className="space-y-2">
           <h1 className="font-display text-xl font-semibold text-foreground">
-            {isCaregiver ? "Caregiver support, tailored for you" : "Tailored for you"}
+            {isCaregiver ? "Small circle, tailored for you" : "Tailored for you"}
           </h1>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {quiz?.priorities?.length

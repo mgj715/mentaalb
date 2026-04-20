@@ -25,7 +25,6 @@ const initialPriorities = [
   "Activities to feel better",
   "Resources and information",
   "Peer stories and experiences",
-  "Support for caregivers",
 ];
 
 const Quiz = () => {
