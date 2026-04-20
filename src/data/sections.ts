@@ -168,11 +168,12 @@ export const CAREGIVER_SECTIONS: Record<SectionId, Section> = {
   },
 };
 
+// Order used on /exploring: community sections (Forums, Small Circle) come last.
 export const FIXED_ORDER: SectionId[] = [
   "resources",
-  "forums",
   "tools",
   "activities",
   "professional",
+  "forums",
   "caregiver",
 ];
