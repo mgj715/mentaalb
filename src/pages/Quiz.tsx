@@ -84,6 +84,21 @@ const Quiz = () => {
   });
   const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = answers.priorities.indexOf(active.id as string);
+      const newIndex = answers.priorities.indexOf(over.id as string);
+      setAnswers({ ...answers, priorities: arrayMove(answers.priorities, oldIndex, newIndex) });
+    }
+  };
+
   const isCareAbout = answers.situation === "someone";
 
   const totalSteps = isCareAbout ? 7 : 6;
