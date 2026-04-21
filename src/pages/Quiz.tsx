@@ -82,7 +82,7 @@ const Quiz = () => {
     supportStyle: "",
     caregiverNeed: "",
   });
-  const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
+  
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
