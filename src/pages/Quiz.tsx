@@ -6,6 +6,45 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical } from "lucide-react";
 import { saveQuiz } from "@/lib/quiz-storage";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+const SortablePriority = ({ id, index }: { id: string; index: number }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
+    >
+      <GripVertical size={16} className="text-muted-foreground flex-shrink-0" />
+      <span className="text-sm font-medium text-card-foreground">{index + 1}. {id}</span>
+    </div>
+  );
+};
 
 type QuizState = {
   situation: string;
@@ -43,7 +82,22 @@ const Quiz = () => {
     supportStyle: "",
     caregiverNeed: "",
   });
-  const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
+  
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = answers.priorities.indexOf(active.id as string);
+      const newIndex = answers.priorities.indexOf(over.id as string);
+      setAnswers({ ...answers, priorities: arrayMove(answers.priorities, oldIndex, newIndex) });
+    }
+  };
 
   const isCareAbout = answers.situation === "someone";
 
@@ -110,16 +164,6 @@ const Quiz = () => {
     }
   };
 
-  const handleDragStart = (idx: number) => setDraggedIdx(idx);
-  const handleDragOver = (e: React.DragEvent, idx: number) => {
-    e.preventDefault();
-    if (draggedIdx === null || draggedIdx === idx) return;
-    const newPriorities = [...answers.priorities];
-    const [removed] = newPriorities.splice(draggedIdx, 1);
-    newPriorities.splice(idx, 0, removed);
-    setAnswers({ ...answers, priorities: newPriorities });
-    setDraggedIdx(idx);
-  };
 
   const OptionButton = ({
     label,
@@ -216,21 +260,13 @@ const Quiz = () => {
               <p className="text-sm text-muted-foreground mt-1">Please drag these into the order that feels right for you:</p>
             </div>
             <div className="space-y-2">
-              {answers.priorities.map((item, idx) => (
-                <div
-                  key={item}
-                  draggable
-                  onDragStart={() => handleDragStart(idx)}
-                  onDragOver={(e) => handleDragOver(e, idx)}
-                  onDragEnd={() => setDraggedIdx(null)}
-                  className={`flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 cursor-grab active:cursor-grabbing transition-colors ${
-                    draggedIdx === idx ? "opacity-50" : ""
-                  }`}
-                >
-                  <GripVertical size={16} className="text-muted-foreground flex-shrink-0" />
-                  <span className="text-sm font-medium text-card-foreground">{idx + 1}. {item}</span>
-                </div>
-              ))}
+              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={answers.priorities} strategy={verticalListSortingStrategy}>
+                  {answers.priorities.map((item, idx) => (
+                    <SortablePriority key={item} id={item} index={idx} />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
           </div>
         );
