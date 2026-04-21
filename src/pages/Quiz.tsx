@@ -260,21 +260,13 @@ const Quiz = () => {
               <p className="text-sm text-muted-foreground mt-1">Please drag these into the order that feels right for you:</p>
             </div>
             <div className="space-y-2">
-              {answers.priorities.map((item, idx) => (
-                <div
-                  key={item}
-                  draggable
-                  onDragStart={() => handleDragStart(idx)}
-                  onDragOver={(e) => handleDragOver(e, idx)}
-                  onDragEnd={() => setDraggedIdx(null)}
-                  className={`flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 cursor-grab active:cursor-grabbing transition-colors ${
-                    draggedIdx === idx ? "opacity-50" : ""
-                  }`}
-                >
-                  <GripVertical size={16} className="text-muted-foreground flex-shrink-0" />
-                  <span className="text-sm font-medium text-card-foreground">{idx + 1}. {item}</span>
-                </div>
-              ))}
+              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={answers.priorities} strategy={verticalListSortingStrategy}>
+                  {answers.priorities.map((item, idx) => (
+                    <SortablePriority key={item} id={item} index={idx} />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
           </div>
         );
