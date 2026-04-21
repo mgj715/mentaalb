@@ -164,16 +164,6 @@ const Quiz = () => {
     }
   };
 
-  const handleDragStart = (idx: number) => setDraggedIdx(idx);
-  const handleDragOver = (e: React.DragEvent, idx: number) => {
-    e.preventDefault();
-    if (draggedIdx === null || draggedIdx === idx) return;
-    const newPriorities = [...answers.priorities];
-    const [removed] = newPriorities.splice(draggedIdx, 1);
-    newPriorities.splice(idx, 0, removed);
-    setAnswers({ ...answers, priorities: newPriorities });
-    setDraggedIdx(idx);
-  };
 
   const OptionButton = ({
     label,
