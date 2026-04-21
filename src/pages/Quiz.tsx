@@ -6,6 +6,45 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical } from "lucide-react";
 import { saveQuiz } from "@/lib/quiz-storage";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+const SortablePriority = ({ id, index }: { id: string; index: number }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
+    >
+      <GripVertical size={16} className="text-muted-foreground flex-shrink-0" />
+      <span className="text-sm font-medium text-card-foreground">{index + 1}. {id}</span>
+    </div>
+  );
+};
 
 type QuizState = {
   situation: string;
