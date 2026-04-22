@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import Exploring from "./pages/Exploring.tsx";
 import Forums from "./pages/Forums.tsx";
+import ForumCategory from "./pages/ForumCategory.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Quiz from "./pages/Quiz.tsx";
 import Tailored from "./pages/Tailored.tsx";
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/exploring" element={<Exploring />} />
           <Route path="/forums" element={<Forums />} />
+          <Route path="/forums/:slug" element={<ForumCategory />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/tailored" element={<Tailored />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
