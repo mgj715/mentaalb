@@ -414,6 +414,17 @@ const Quiz = () => {
             {step < totalSteps && <ArrowRight size={16} className="ml-2" />}
           </Button>
         </div>
+
+        {/* Skip for now */}
+        <div className="text-center pt-1">
+          <button
+            onClick={() => navigate("/exploring")}
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors underline-offset-4 hover:underline"
+          >
+            Skip for now
+          </button>
+          <p className="text-xs text-muted-foreground mt-1">I want to explore freely</p>
+        </div>
       </main>
       <Footer />
     </div>
