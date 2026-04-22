@@ -219,6 +219,7 @@ const Quiz = () => {
                 {answers.hasDiagnosis === "yes" && (
                   <div className="pt-1">
                     <p className="text-sm text-muted-foreground mb-2">Please share your diagnosis (optional):</p>
+                    <p className="text-xs text-muted-foreground mb-2">You can share this only if you want. It helps us tailor information, but it's not required.</p>
                     <Textarea
                       value={answers.diagnosis}
                       onChange={(e) => setAnswers({ ...answers, diagnosis: e.target.value })}
