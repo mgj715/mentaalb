@@ -81,7 +81,7 @@ export const PERSONAL_SECTIONS: Record<SectionId, Section> = {
       { title: "Emotions & Coping", description: "A place to talk about feelings safely." },
       { title: "Life Challenges", description: "For experiences that affect mental wellbeing." },
     ],
-    footer: { label: "More →" },
+    footer: { label: "More →", href: "/forums" },
   },
   professional: {
     id: "professional",
@@ -144,7 +144,7 @@ export const CAREGIVER_SECTIONS: Record<SectionId, Section> = {
       { title: "Caring for a child", description: "Parents sharing what's working." },
       { title: "Caring for a friend", description: "When the person you love isn't family." },
     ],
-    footer: { label: "More →" },
+    footer: { label: "More →", href: "/forums" },
   },
   professional: {
     id: "professional",

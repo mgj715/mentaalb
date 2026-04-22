@@ -1,4 +1,5 @@
 import { BookOpen, Wrench, Sparkles, MessageSquare, Stethoscope, Heart, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Section } from "@/data/sections";
 
 const iconMap = {
@@ -32,12 +33,21 @@ const SectionBlock = ({ section }: { section: Section }) => {
           </div>
         ))}
       </div>
-      {section.footer && (
-        <button className="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-          {section.footer.label}
-          <ExternalLink size={12} />
-        </button>
-      )}
+      {section.footer &&
+        (section.footer.href ? (
+          <Link
+            to={section.footer.href}
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            {section.footer.label}
+            <ExternalLink size={12} />
+          </Link>
+        ) : (
+          <button className="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+            {section.footer.label}
+            <ExternalLink size={12} />
+          </button>
+        ))}
     </section>
   );
 };
