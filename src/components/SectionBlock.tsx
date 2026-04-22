@@ -1,4 +1,5 @@
 import { BookOpen, Wrench, Sparkles, MessageSquare, Stethoscope, Heart, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Section } from "@/data/sections";
 
 const iconMap = {
