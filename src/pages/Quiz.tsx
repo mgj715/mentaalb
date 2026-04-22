@@ -416,14 +416,14 @@ const Quiz = () => {
         </div>
 
         {/* Skip for now */}
-        <div className="text-center pt-1">
+        <div className="text-center pt-2">
           <button
             onClick={() => navigate("/exploring")}
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            className="inline-flex flex-col items-center gap-0.5 rounded-xl border border-border bg-card px-5 py-3 text-card-foreground hover:bg-accent/50 transition-colors w-full"
           >
-            Skip for now
+            <span className="text-sm font-semibold">Skip for now</span>
+            <span className="text-xs text-muted-foreground">I want to explore freely</span>
           </button>
-          <p className="text-xs text-muted-foreground mt-1">I want to explore freely</p>
         </div>
       </main>
       <Footer />
