@@ -285,6 +285,7 @@ const Quiz = () => {
                 "I'm feeling overwhelmed",
                 "I'm worried about someone else",
                 "I'm looking for guidance",
+                "I'm not sure how I'm feeling",
                 "I don't know where to start",
               ].map((option) => (
                 <OptionButton
