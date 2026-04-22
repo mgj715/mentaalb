@@ -14,14 +14,16 @@ const HeroSection = () => {
           onClick={() => navigate("/exploring")}
           className="w-full rounded-xl border border-border bg-card px-5 py-5 text-left hover:bg-accent/50 transition-colors"
         >
-          <span className="font-display text-lg font-semibold text-card-foreground">I'm exploring</span>
+          <span className="block font-display text-lg font-semibold text-card-foreground">I'm exploring</span>
+          <span className="mt-1 block text-sm text-muted-foreground">Browse freely without answering questions</span>
         </button>
 
         <button
           onClick={() => navigate("/quiz")}
           className="w-full rounded-xl border border-border bg-card px-5 py-5 text-left hover:bg-accent/50 transition-colors"
         >
-          <span className="font-display text-lg font-semibold text-card-foreground">I need tailored support</span>
+          <span className="block font-display text-lg font-semibold text-card-foreground">I need tailored support</span>
+          <span className="mt-1 block text-sm text-muted-foreground">Get a personalized path based on your situation</span>
         </button>
       </div>
     </div>
