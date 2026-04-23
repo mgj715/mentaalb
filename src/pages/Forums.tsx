@@ -32,9 +32,6 @@ const Forums = () => {
             <section key={group.id} className="space-y-3">
               <div className="space-y-1">
                 <h2 className="font-display text-base font-semibold text-foreground">
-                  <span className="mr-1.5" aria-hidden>
-                    {group.emoji}
-                  </span>
                   {group.title}
                 </h2>
                 <p className="text-xs text-muted-foreground leading-relaxed">
