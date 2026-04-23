@@ -46,7 +46,10 @@ const ForumCategory = () => {
             <ul className="space-y-3">
               {category.threads.map((thread) => (
                 <li key={thread.id}>
-                  <article className="rounded-xl border border-border bg-card px-4 py-3 hover:border-primary/40 transition-colors">
+                  <Link
+                    to={`/forums/${category.slug}/${thread.id}`}
+                    className="block rounded-xl border border-border bg-card px-4 py-3 hover:border-primary/40 transition-colors"
+                  >
                     <h2 className="font-display text-sm font-semibold text-card-foreground leading-snug">
                       {thread.title}
                     </h2>
@@ -57,7 +60,7 @@ const ForumCategory = () => {
                       <span>{thread.lastActivity}</span>
                       <span>{thread.replies} replies</span>
                     </div>
-                  </article>
+                  </Link>
                 </li>
               ))}
             </ul>
