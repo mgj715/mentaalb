@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { FORUM_CATEGORY_GROUPS, type ForumThread as ThreadMeta } from "@/data/forumCategories";
+import { getMockPosts } from "@/data/mockThreadReplies";
 
 type Post = {
   id: string;
@@ -208,12 +209,50 @@ const ForumThread = () => {
 
             {/* Posts list */}
             <section className="space-y-4">
+              {/* Mock community posts — always shown so threads feel populated */}
+              {getMockPosts(meta.thread).map((mp) => (
+                <article
+                  key={mp.id}
+                  className="rounded-xl border border-border bg-card px-4 py-3 space-y-3"
+                >
+                  <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                    <span>{mp.author}</span>
+                    <span>{mp.createdLabel}</span>
+                  </div>
+                  <p className="text-sm text-card-foreground whitespace-pre-wrap leading-relaxed">
+                    {mp.body}
+                  </p>
+
+                  {mp.comments.length > 0 && (
+                    <ul className="space-y-2 border-l-2 border-border pl-3">
+                      {mp.comments.map((c) => (
+                        <li key={c.id} className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                            <span>{c.author}</span>
+                            <span>{c.createdLabel}</span>
+                          </div>
+                          <p className="text-xs text-card-foreground whitespace-pre-wrap leading-relaxed">
+                            {c.body}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {!user && (
+                    <Link
+                      to={authRedirect}
+                      className="inline-block text-xs text-primary hover:underline"
+                    >
+                      Sign in to reply
+                    </Link>
+                  )}
+                </article>
+              ))}
+
+              {/* Real database posts */}
               {loading ? (
                 <p className="text-sm text-muted-foreground">Loading…</p>
-              ) : posts.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  No posts yet. Be the first to share.
-                </p>
               ) : (
                 posts.map((post) => {
                   const postComments = comments.filter((c) => c.post_id === post.id);
