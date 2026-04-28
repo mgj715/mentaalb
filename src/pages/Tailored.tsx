@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SectionBlock from "@/components/SectionBlock";
+import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { CAREGIVER_SECTIONS, PERSONAL_SECTIONS, FIXED_ORDER, SensitiveTopic } from "@/data/sections";
 import { loadQuiz, orderedSectionIds, filterByTopics } from "@/lib/quiz-storage";
@@ -25,14 +26,15 @@ const Tailored = () => {
   const avoid = (quiz?.sensitiveTopics ?? []) as SensitiveTopic[];
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-background">
+    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-8">
         <div className="space-y-2">
-          <h1 className="font-display text-xl font-semibold text-foreground">
+          <h1 className="font-display text-3xl font-semibold text-charcoal">
             {isCaregiver ? "Small circle, tailored for you" : "Tailored for you"}
           </h1>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-charcoal/70 leading-relaxed">
             {quiz?.priorities?.length
               ? "We've ordered these sections based on what matters most to you."
               : "Take the short quiz to personalize the order of these sections."}
@@ -40,7 +42,7 @@ const Tailored = () => {
           {!quiz && (
             <Button
               variant="outline"
-              className="rounded-xl mt-2"
+              className="rounded-full border-sage/50 bg-sage/20 hover:bg-sage/40 mt-2"
               onClick={() => navigate("/quiz")}
             >
               Take the quiz
