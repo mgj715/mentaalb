@@ -379,17 +379,18 @@ const Quiz = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-background">
+    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         {/* Progress */}
         <div className="space-y-2">
-          <div className="flex justify-between text-xs text-muted-foreground">
+          <div className="flex justify-between font-accent text-xs text-charcoal/70">
             <span>Step {getStepNumber()} of {totalSteps}</span>
           </div>
-          <div className="w-full h-1.5 bg-secondary rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-sage/30 rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-300"
+              className="h-full bg-lavender rounded-full transition-all duration-300"
               style={{ width: `${(getStepNumber() / totalSteps) * 100}%` }}
             />
           </div>
@@ -402,14 +403,14 @@ const Quiz = () => {
           <Button
             variant="outline"
             onClick={handleBack}
-            className="rounded-xl border-border"
+            className="rounded-full border-sage/40 bg-card hover:bg-sage/15"
           >
             <ArrowLeft size={16} />
           </Button>
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
-            className="flex-1 rounded-xl"
+            className="flex-1 rounded-full"
           >
             {(step === totalSteps) ? "Finish" : "Continue"}
             {step < totalSteps && <ArrowRight size={16} className="ml-2" />}
@@ -420,10 +421,10 @@ const Quiz = () => {
         <div className="text-center pt-2">
           <button
             onClick={() => navigate("/exploring")}
-            className="inline-flex flex-col items-center gap-0.5 rounded-xl border border-border bg-card px-5 py-3 text-card-foreground hover:bg-accent/50 transition-colors w-full"
+            className="inline-flex flex-col items-center gap-0.5 rounded-2xl border border-peach/40 bg-peach/15 px-5 py-3 text-charcoal hover:bg-peach/25 transition-colors w-full"
           >
-            <span className="text-sm font-semibold">Skip for now</span>
-            <span className="text-xs text-muted-foreground">I want to explore freely</span>
+            <span className="text-sm font-accent font-semibold">Skip for now</span>
+            <span className="text-xs text-charcoal/70">I want to explore freely</span>
           </button>
         </div>
       </main>
