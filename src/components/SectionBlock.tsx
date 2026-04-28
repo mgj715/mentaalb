@@ -11,6 +11,13 @@ const iconMap = {
   heart: Heart,
 };
 
+// Soft alternating backgrounds keep the page feeling like a gentle wave.
+const TONES = [
+  "bg-sage/15 border-sage/30",
+  "bg-lavender/15 border-lavender/30",
+  "bg-peach/15 border-peach/30",
+] as const;
+
 const SectionBlock = ({ section }: { section: Section }) => {
   const Icon = iconMap[section.icon] ?? BookOpen;
 
@@ -19,17 +26,19 @@ const SectionBlock = ({ section }: { section: Section }) => {
   return (
     <section className="space-y-3">
       <div className="flex items-center gap-2">
-        <Icon size={18} className="text-primary" />
-        <h2 className="font-display text-lg font-semibold text-foreground">{section.title}</h2>
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sage/40 text-charcoal">
+          <Icon size={18} />
+        </span>
+        <h2 className="font-display text-2xl font-semibold text-charcoal">{section.title}</h2>
       </div>
       <div className="space-y-2">
-        {section.items.map((item) => (
+        {section.items.map((item, i) => (
           <div
             key={item.title}
-            className="rounded-xl border border-border bg-card px-4 py-3"
+            className={`rounded-2xl border ${TONES[i % TONES.length]} px-4 py-3.5`}
           >
-            <p className="font-display text-sm font-semibold text-card-foreground">{item.title}</p>
-            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.description}</p>
+            <p className="font-display text-base font-semibold text-charcoal leading-snug">{item.title}</p>
+            <p className="text-xs text-charcoal/70 mt-1 leading-relaxed">{item.description}</p>
           </div>
         ))}
       </div>
@@ -37,13 +46,13 @@ const SectionBlock = ({ section }: { section: Section }) => {
         (section.footer.href ? (
           <Link
             to={section.footer.href}
-            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            className="inline-flex items-center gap-1 text-sm font-accent font-medium text-charcoal hover:underline"
           >
             {section.footer.label}
             <ExternalLink size={12} />
           </Link>
         ) : (
-          <button className="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+          <button className="flex items-center gap-1 text-sm font-accent font-medium text-charcoal hover:underline">
             {section.footer.label}
             <ExternalLink size={12} />
           </button>
