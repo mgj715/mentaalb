@@ -196,15 +196,15 @@ const ForumThread = () => {
                 </Button>
               </form>
             ) : (
-              <div className="rounded-xl border border-border bg-card px-4 py-3 space-y-2">
-                <p className="text-sm text-card-foreground">
+              <div className="rounded-2xl border border-lavender/30 bg-lavender/15 px-4 py-3.5 space-y-2">
+                <p className="text-sm text-charcoal">
                   Sign in to share a post or reply.
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-charcoal/70">
                   Reading is open to everyone — contributing needs an account.
                 </p>
                 <Link to={authRedirect}>
-                  <Button size="sm" className="w-full mt-1">
+                  <Button size="sm" className="w-full mt-1 rounded-full">
                     Sign in to contribute
                   </Button>
                 </Link>
@@ -217,7 +217,7 @@ const ForumThread = () => {
               {getMockPosts(meta.thread).map((mp) => (
                 <article
                   key={mp.id}
-                  className="rounded-xl border border-border bg-card px-4 py-3 space-y-3"
+                  className="rounded-2xl border border-sage/30 bg-card px-4 py-3.5 space-y-3"
                 >
                   <div className="flex items-center justify-between text-[11px] text-muted-foreground">
                     <span>{mp.author}</span>
