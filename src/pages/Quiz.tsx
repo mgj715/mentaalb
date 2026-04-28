@@ -193,7 +193,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Your Situation</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Your Situation</h2>
               <p className="text-sm text-muted-foreground mt-1">What describes your situation best?</p>
             </div>
             <div className="space-y-2">
@@ -238,7 +238,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Sensitive or Triggering Content</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Sensitive or Triggering Content</h2>
               <p className="text-sm text-muted-foreground mt-1">Are there topics you prefer not to see?</p>
             </div>
             <div className="space-y-2">
@@ -258,7 +258,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Your Priorities</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Your Priorities</h2>
               <p className="text-sm text-muted-foreground mt-1">Please drag these into the order that feels right for you:</p>
             </div>
             <div className="space-y-2">
@@ -277,7 +277,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Your Current State</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Your Current State</h2>
               <p className="text-sm text-muted-foreground mt-1">How are things for you right now?</p>
             </div>
             <div className="space-y-2">
@@ -304,7 +304,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Time & Energy</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Time & Energy</h2>
               <p className="text-sm text-muted-foreground mt-1">How much time do you have today?</p>
             </div>
             <div className="space-y-2">
@@ -324,7 +324,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Preferred Style of Support</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Preferred Style of Support</h2>
               <p className="text-sm text-muted-foreground mt-1">What style of support works best for you?</p>
             </div>
             <div className="space-y-2">
@@ -351,7 +351,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Caregiver Support</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Caregiver Support</h2>
               <p className="text-sm text-muted-foreground mt-1">What do you need most right now?</p>
             </div>
             <div className="space-y-2">
