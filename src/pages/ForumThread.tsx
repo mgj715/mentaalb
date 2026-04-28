@@ -263,7 +263,7 @@ const ForumThread = () => {
                   return (
                     <article
                       key={post.id}
-                      className="rounded-xl border border-border bg-card px-4 py-3 space-y-3"
+                      className="rounded-2xl border border-lavender/30 bg-card px-4 py-3.5 space-y-3"
                     >
                       <div className="flex items-center justify-between text-[11px] text-muted-foreground">
                         <span>{shortAuthor(post.author_id)}</span>
