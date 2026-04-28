@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,50 +6,61 @@
 
 @layer base {
   :root {
-    --background: 40 33% 96%;
-    --foreground: 210 11% 15%;
+    /* Brand palette */
+    --sage: 165 27% 73%;
+    --lavender: 268 28% 78%;
+    --peach: 16 60% 78%;
+    --beige: 35 33% 93%;
+    --warm-white: 36 27% 97%;
+    --stone: 0 0% 83%;
+    --charcoal: 0 0% 29%;
+
+    /* Semantic tokens */
+    --background: 36 27% 97%;
+    --foreground: 0 0% 29%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 11% 15%;
+    --card-foreground: 0 0% 29%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 11% 15%;
+    --popover-foreground: 0 0% 29%;
 
-    --primary: 152 32% 40%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 165 27% 73%;
+    --primary-foreground: 0 0% 29%;
 
-    --secondary: 40 20% 92%;
-    --secondary-foreground: 210 11% 15%;
+    --secondary: 268 28% 78%;
+    --secondary-foreground: 0 0% 29%;
 
-    --muted: 40 20% 92%;
-    --muted-foreground: 210 7% 46%;
+    --muted: 35 33% 93%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 40 20% 92%;
-    --accent-foreground: 210 11% 15%;
+    --accent: 16 60% 78%;
+    --accent-foreground: 0 0% 29%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 65% 54%;
     --destructive-foreground: 0 0% 100%;
 
     --crisis: 0 65% 54%;
     --crisis-foreground: 0 0% 100%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 152 32% 40%;
+    --border: 0 0% 83%;
+    --input: 0 0% 83%;
+    --ring: 165 27% 60%;
 
     --radius: 0.75rem;
 
-    --font-display: 'DM Serif Display', serif;
-    --font-body: 'DM Sans', sans-serif;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-accent: 'Manrope', sans-serif;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 36 27% 97%;
+    --sidebar-foreground: 0 0% 29%;
+    --sidebar-primary: 165 27% 73%;
+    --sidebar-primary-foreground: 0 0% 29%;
+    --sidebar-accent: 35 33% 93%;
+    --sidebar-accent-foreground: 0 0% 29%;
+    --sidebar-border: 0 0% 83%;
+    --sidebar-ring: 165 27% 60%;
   }
 }
 

@@ -16,8 +16,16 @@ export default {
       fontFamily: {
         display: ["var(--font-display)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
+        accent: ["var(--font-accent)", "sans-serif"],
       },
       colors: {
+        sage: "hsl(var(--sage))",
+        lavender: "hsl(var(--lavender))",
+        peach: "hsl(var(--peach))",
+        beige: "hsl(var(--beige))",
+        "warm-white": "hsl(var(--warm-white))",
+        stone: "hsl(var(--stone))",
+        charcoal: "hsl(var(--charcoal))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
