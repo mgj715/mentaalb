@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, MessageSquare } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
@@ -143,12 +144,13 @@ const ForumThread = () => {
   const authRedirect = `/auth?redirect=${encodeURIComponent(`/forums/${slug}/${threadId}`)}`;
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-background">
+    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         <Link
           to={slug ? `/forums/${slug}` : "/forums"}
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
         >
           <ChevronLeft size={16} />
           {meta ? meta.categoryName : "Back"}
@@ -156,19 +158,21 @@ const ForumThread = () => {
 
         {!meta ? (
           <div className="space-y-2">
-            <h1 className="font-display text-xl font-semibold text-foreground">Thread not found</h1>
-            <p className="text-sm text-muted-foreground">This thread doesn't exist.</p>
+            <h1 className="font-display text-3xl font-semibold text-charcoal">Thread not found</h1>
+            <p className="text-sm text-charcoal/70">This thread doesn't exist.</p>
           </div>
         ) : (
           <>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <MessageSquare size={18} className="text-primary" />
-                <h1 className="font-display text-xl font-semibold text-foreground leading-snug">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-peach/40 text-charcoal">
+                  <MessageSquare size={18} />
+                </span>
+                <h1 className="font-display text-2xl font-semibold text-charcoal leading-snug">
                   {meta.thread.title}
                 </h1>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-charcoal/70 leading-relaxed">
                 {meta.thread.excerpt}
               </p>
             </div>
