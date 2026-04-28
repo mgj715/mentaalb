@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -57,31 +58,35 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-background">
+    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         <Link
           to={redirectTo}
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
         >
           <ChevronLeft size={16} />
           Back
         </Link>
 
         <div className="space-y-2">
-          <h1 className="font-display text-xl font-semibold text-foreground">
+          <h1 className="font-display text-3xl font-semibold text-charcoal">
             {mode === "signin" ? "Welcome back" : "Create your account"}
           </h1>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-charcoal/70 leading-relaxed">
             {mode === "signin"
               ? "Sign in to share posts and reply in the forums."
               : "Make an account to contribute to the conversation."}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 rounded-3xl border border-sage/30 bg-card/80 backdrop-blur-sm px-5 py-5"
+        >
           <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="font-accent text-charcoal">Email</Label>
             <Input
               id="email"
               type="email"
@@ -89,10 +94,11 @@ const Auth = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="rounded-full"
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="font-accent text-charcoal">Password</Label>
             <Input
               id="password"
               type="password"
@@ -101,9 +107,10 @@ const Auth = () => {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="rounded-full"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={submitting}>
+          <Button type="submit" className="w-full rounded-full" disabled={submitting}>
             {submitting
               ? "Please wait…"
               : mode === "signin"
@@ -115,7 +122,7 @@ const Auth = () => {
         <button
           type="button"
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="w-full text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
         >
           {mode === "signin"
             ? "New here? Create an account"
