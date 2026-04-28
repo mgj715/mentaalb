@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical } from "lucide-react";
@@ -38,10 +39,10 @@ const SortablePriority = ({ id, index }: { id: string; index: number }) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
+      className="flex items-center gap-3 rounded-2xl border border-sage/30 bg-sage/15 px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
     >
-      <GripVertical size={16} className="text-muted-foreground flex-shrink-0" />
-      <span className="text-sm font-medium text-card-foreground">{index + 1}. {id}</span>
+      <GripVertical size={16} className="text-charcoal/60 flex-shrink-0" />
+      <span className="text-sm font-medium text-charcoal">{index + 1}. {id}</span>
     </div>
   );
 };
@@ -176,10 +177,10 @@ const Quiz = () => {
   }) => (
     <button
       onClick={onClick}
-      className={`w-full rounded-xl border px-5 py-4 text-left transition-colors text-sm font-medium ${
+      className={`w-full rounded-2xl border px-5 py-4 text-left transition-colors text-sm font-medium ${
         selected
-          ? "border-primary bg-primary/10 text-foreground"
-          : "border-border bg-card text-card-foreground hover:bg-accent/50"
+          ? "border-lavender bg-lavender/40 text-charcoal"
+          : "border-sage/30 bg-card text-charcoal hover:bg-sage/15"
       }`}
     >
       {label}
@@ -192,7 +193,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Your Situation</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Your Situation</h2>
               <p className="text-sm text-muted-foreground mt-1">What describes your situation best?</p>
             </div>
             <div className="space-y-2">
@@ -237,7 +238,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Sensitive or Triggering Content</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Sensitive or Triggering Content</h2>
               <p className="text-sm text-muted-foreground mt-1">Are there topics you prefer not to see?</p>
             </div>
             <div className="space-y-2">
@@ -257,7 +258,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Your Priorities</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Your Priorities</h2>
               <p className="text-sm text-muted-foreground mt-1">Please drag these into the order that feels right for you:</p>
             </div>
             <div className="space-y-2">
@@ -276,7 +277,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Your Current State</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Your Current State</h2>
               <p className="text-sm text-muted-foreground mt-1">How are things for you right now?</p>
             </div>
             <div className="space-y-2">
@@ -303,7 +304,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Time & Energy</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Time & Energy</h2>
               <p className="text-sm text-muted-foreground mt-1">How much time do you have today?</p>
             </div>
             <div className="space-y-2">
@@ -323,7 +324,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Preferred Style of Support</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Preferred Style of Support</h2>
               <p className="text-sm text-muted-foreground mt-1">What style of support works best for you?</p>
             </div>
             <div className="space-y-2">
@@ -350,7 +351,7 @@ const Quiz = () => {
         return (
           <div className="space-y-4">
             <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">Caregiver Support</h2>
+              <h2 className="font-display text-2xl font-semibold text-charcoal">Caregiver Support</h2>
               <p className="text-sm text-muted-foreground mt-1">What do you need most right now?</p>
             </div>
             <div className="space-y-2">
@@ -378,17 +379,18 @@ const Quiz = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-background">
+    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         {/* Progress */}
         <div className="space-y-2">
-          <div className="flex justify-between text-xs text-muted-foreground">
+          <div className="flex justify-between font-accent text-xs text-charcoal/70">
             <span>Step {getStepNumber()} of {totalSteps}</span>
           </div>
-          <div className="w-full h-1.5 bg-secondary rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-sage/30 rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-300"
+              className="h-full bg-lavender rounded-full transition-all duration-300"
               style={{ width: `${(getStepNumber() / totalSteps) * 100}%` }}
             />
           </div>
@@ -401,14 +403,14 @@ const Quiz = () => {
           <Button
             variant="outline"
             onClick={handleBack}
-            className="rounded-xl border-border"
+            className="rounded-full border-sage/40 bg-card hover:bg-sage/15"
           >
             <ArrowLeft size={16} />
           </Button>
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
-            className="flex-1 rounded-xl"
+            className="flex-1 rounded-full"
           >
             {(step === totalSteps) ? "Finish" : "Continue"}
             {step < totalSteps && <ArrowRight size={16} className="ml-2" />}
@@ -419,10 +421,10 @@ const Quiz = () => {
         <div className="text-center pt-2">
           <button
             onClick={() => navigate("/exploring")}
-            className="inline-flex flex-col items-center gap-0.5 rounded-xl border border-border bg-card px-5 py-3 text-card-foreground hover:bg-accent/50 transition-colors w-full"
+            className="inline-flex flex-col items-center gap-0.5 rounded-2xl border border-peach/40 bg-peach/15 px-5 py-3 text-charcoal hover:bg-peach/25 transition-colors w-full"
           >
-            <span className="text-sm font-semibold">Skip for now</span>
-            <span className="text-xs text-muted-foreground">I want to explore freely</span>
+            <span className="text-sm font-accent font-semibold">Skip for now</span>
+            <span className="text-xs text-charcoal/70">I want to explore freely</span>
           </button>
         </div>
       </main>

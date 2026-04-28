@@ -15,20 +15,24 @@ const faqs = [
 const FAQSection = () => {
   return (
     <section className="space-y-4">
-      <h2 className="font-display text-lg font-semibold text-foreground">Frequently Asked Questions</h2>
+      <h2 className="font-display text-2xl font-semibold text-charcoal">Frequently asked questions</h2>
       <Accordion type="single" collapsible className="space-y-2">
         {faqs.map((faq, i) => (
-          <AccordionItem key={i} value={`faq-${i}`} className="border rounded-lg px-4 bg-card">
-            <AccordionTrigger className="text-sm font-medium text-card-foreground hover:no-underline">
+          <AccordionItem
+            key={i}
+            value={`faq-${i}`}
+            className="border border-sage/30 rounded-2xl px-4 bg-card"
+          >
+            <AccordionTrigger className="text-sm font-medium text-charcoal hover:no-underline">
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent className="text-sm text-muted-foreground">
+            <AccordionContent className="text-sm text-charcoal/70 leading-relaxed">
               {faq.a}
             </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
-      <button className="w-full text-sm text-primary font-medium hover:underline transition-colors">
+      <button className="w-full text-sm font-accent font-medium text-charcoal/80 hover:text-charcoal transition-colors">
         More →
       </button>
     </section>
