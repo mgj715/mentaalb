@@ -2,16 +2,25 @@ import { Link } from "react-router-dom";
 import { MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SoftBackdrop from "@/components/SoftBackdrop";
 import { FORUM_CATEGORY_GROUPS } from "@/data/forumCategories";
+
+// Soft, alternating tones — keeps the list feeling like gentle ripples.
+const GROUP_TONES = [
+  "bg-sage/15 border-sage/30",
+  "bg-lavender/15 border-lavender/30",
+  "bg-peach/15 border-peach/30",
+] as const;
 
 const Forums = () => {
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-background">
+    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-8">
         <Link
           to="/exploring"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
         >
           <ChevronLeft size={16} />
           Back
@@ -19,22 +28,24 @@ const Forums = () => {
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <MessageSquare size={18} className="text-primary" />
-            <h1 className="font-display text-xl font-semibold text-foreground">Forums</h1>
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sage/40 text-charcoal">
+              <MessageSquare size={18} />
+            </span>
+            <h1 className="font-display text-3xl font-semibold text-charcoal">Forums</h1>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-charcoal/70 leading-relaxed">
             Pick a space that fits how you're feeling. Each category holds gentle conversations from the community.
           </p>
         </div>
 
         <div className="space-y-8">
-          {FORUM_CATEGORY_GROUPS.map((group) => (
+          {FORUM_CATEGORY_GROUPS.map((group, gi) => (
             <section key={group.id} className="space-y-3">
               <div className="space-y-1">
-                <h2 className="font-display text-base font-semibold text-foreground">
+                <h2 className="font-display text-xl font-semibold text-charcoal">
                   {group.title}
                 </h2>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="font-accent text-xs text-charcoal/60 leading-relaxed">
                   {group.subtitle}
                 </p>
               </div>
@@ -44,21 +55,21 @@ const Forums = () => {
                   <li key={category.slug}>
                     <Link
                       to={`/forums/${category.slug}`}
-                      className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 hover:border-primary/40 hover:bg-accent/40 transition-colors"
+                      className={`flex items-center justify-between gap-3 rounded-2xl border ${GROUP_TONES[gi % GROUP_TONES.length]} px-4 py-3.5 transition-colors hover:bg-card`}
                     >
                       <div className="min-w-0">
-                        <h3 className="text-sm font-medium text-card-foreground truncate">
+                        <h3 className="font-display text-base font-semibold text-charcoal truncate">
                           {category.name}
                         </h3>
-                        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed line-clamp-1">
+                        <p className="text-xs text-charcoal/70 mt-0.5 leading-relaxed line-clamp-1">
                           {category.description}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[11px] text-muted-foreground">
+                        <span className="font-accent text-[11px] text-charcoal/60">
                           {category.threads.length}
                         </span>
-                        <ChevronRight size={16} className="text-muted-foreground" />
+                        <ChevronRight size={16} className="text-charcoal/60" />
                       </div>
                     </Link>
                   </li>
