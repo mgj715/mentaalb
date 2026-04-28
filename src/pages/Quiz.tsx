@@ -39,10 +39,10 @@ const SortablePriority = ({ id, index }: { id: string; index: number }) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
+      className="flex items-center gap-3 rounded-2xl border border-sage/30 bg-sage/15 px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
     >
-      <GripVertical size={16} className="text-muted-foreground flex-shrink-0" />
-      <span className="text-sm font-medium text-card-foreground">{index + 1}. {id}</span>
+      <GripVertical size={16} className="text-charcoal/60 flex-shrink-0" />
+      <span className="text-sm font-medium text-charcoal">{index + 1}. {id}</span>
     </div>
   );
 };
@@ -177,10 +177,10 @@ const Quiz = () => {
   }) => (
     <button
       onClick={onClick}
-      className={`w-full rounded-xl border px-5 py-4 text-left transition-colors text-sm font-medium ${
+      className={`w-full rounded-2xl border px-5 py-4 text-left transition-colors text-sm font-medium ${
         selected
-          ? "border-primary bg-primary/10 text-foreground"
-          : "border-border bg-card text-card-foreground hover:bg-accent/50"
+          ? "border-lavender bg-lavender/40 text-charcoal"
+          : "border-sage/30 bg-card text-charcoal hover:bg-sage/15"
       }`}
     >
       {label}
