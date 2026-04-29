@@ -62,6 +62,7 @@ export const PERSONAL_SECTIONS: Record<SectionId, Section> = {
       { title: "Grounding practices", description: "Bring yourself back to the present moment.", topics: ["Trauma"] },
       { title: "Mood tracker", description: "Notice patterns in how you feel day to day." },
     ],
+    footer: { label: "Browse all tools →", href: "/tools" },
   },
   activities: {
     id: "activities",
