@@ -51,6 +51,7 @@ export const PERSONAL_SECTIONS: Record<SectionId, Section> = {
       { title: "Articles", description: "Informative reads on mental health topics and wellbeing." },
       { title: "Videos", description: "Watch and learn through guided visual content." },
     ],
+    footer: { label: "Browse all resources →", href: "/resources" },
   },
   tools: {
     id: "tools",

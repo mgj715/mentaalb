@@ -13,6 +13,7 @@ import ForumThread from "./pages/ForumThread.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Quiz from "./pages/Quiz.tsx";
 import Tailored from "./pages/Tailored.tsx";
+import Resources from "./pages/Resources.tsx";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/forums/:slug/:threadId" element={<ForumThread />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/tailored" element={<Tailored />} />
+            <Route path="/resources" element={<Resources />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
