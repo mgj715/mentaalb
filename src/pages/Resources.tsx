@@ -1,15 +1,24 @@
-import { Play, BookOpen, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Play, BookOpen, FileText, ChevronLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { ARTICLES, STORIES, VIDEOS } from "@/data/resources";
 
 const Resources = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
+        >
+          <ChevronLeft size={16} />
+          Back
+        </button>
         <div className="space-y-2">
           <h1 className="font-display text-3xl font-semibold text-charcoal">Resources</h1>
           <p className="text-sm text-charcoal/70 leading-relaxed">
