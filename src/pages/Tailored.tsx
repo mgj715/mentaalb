@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SectionBlock from "@/components/SectionBlock";
@@ -30,6 +31,13 @@ const Tailored = () => {
       <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
+        >
+          <ChevronLeft size={16} />
+          Back
+        </button>
         <div className="space-y-2">
           <h1 className="font-display text-3xl font-semibold text-charcoal">
             {isCaregiver ? "Small circle, tailored for you" : "Tailored for you"}
