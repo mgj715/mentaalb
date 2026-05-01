@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, ArrowLeft, GripVertical } from "lucide-react";
+import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft } from "lucide-react";
 import { saveQuiz } from "@/lib/quiz-storage";
 import {
   DndContext,
@@ -383,6 +383,13 @@ const Quiz = () => {
       <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
+        >
+          <ChevronLeft size={16} />
+          Back
+        </button>
         {/* Progress */}
         <div className="space-y-2">
           <div className="flex justify-between font-accent text-xs text-charcoal/70">
