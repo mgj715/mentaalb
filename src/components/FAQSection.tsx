@@ -23,7 +23,7 @@ const FAQSection = () => {
             value={`faq-${i}`}
             className="border border-sage/30 rounded-2xl px-4 bg-card"
           >
-            <AccordionTrigger className="text-sm font-medium text-charcoal hover:no-underline">
+            <AccordionTrigger className="text-sm font-medium text-charcoal hover:no-underline text-left">
               {faq.q}
             </AccordionTrigger>
             <AccordionContent className="text-sm text-charcoal/70 leading-relaxed">
