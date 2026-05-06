@@ -15,6 +15,7 @@ import Quiz from "./pages/Quiz.tsx";
 import Tailored from "./pages/Tailored.tsx";
 import Resources from "./pages/Resources.tsx";
 import Tools from "./pages/Tools.tsx";
+import Activities from "./pages/Activities.tsx";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/tailored" element={<Tailored />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/tools" element={<Tools />} />
+            <Route path="/activities" element={<Activities />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

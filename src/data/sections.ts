@@ -73,6 +73,7 @@ export const PERSONAL_SECTIONS: Record<SectionId, Section> = {
       { title: "Creative outlets", description: "Journaling, drawing, and music for self-expression." },
       { title: "Connection prompts", description: "Small ways to reach out to people you care about." },
     ],
+    footer: { label: "Browse all activities →", href: "/activities" },
   },
   forums: {
     id: "forums",
