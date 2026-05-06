@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { to: "/tailored", label: "Tailored for you" },
   { to: "/resources", label: "Resources" },
   { to: "/tools", label: "Tools & exercises" },
+  { to: "/activities", label: "Activities" },
   { to: "/forums", label: "Forums" },
   { to: "/quiz", label: "Take the quiz" },
   { to: "/auth", label: "Sign in" },
