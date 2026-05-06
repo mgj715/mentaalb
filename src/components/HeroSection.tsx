@@ -45,7 +45,6 @@ const HeroSection = () => {
           <span className="mt-1 block text-sm text-charcoal/70">Get a personalized path based on your situation</span>
         </button>
 
-        <div className="mx-auto h-1.5 w-24 rounded-full bg-peach/70" aria-hidden="true" />
       </div>
     </div>
   );
