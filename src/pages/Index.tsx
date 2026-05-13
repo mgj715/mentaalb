@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import UrgentHelp from "@/components/UrgentHelp";
 import WhatIsMentaal from "@/components/WhatIsMentaal";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
@@ -13,7 +12,6 @@ const Index = () => {
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         <HeroSection />
-        <UrgentHelp />
         <WhatIsMentaal />
         <FAQSection />
       </main>
@@ -23,3 +21,4 @@ const Index = () => {
 };
 
 export default Index;
+
