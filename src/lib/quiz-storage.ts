@@ -5,6 +5,10 @@ export type StoredQuiz = {
   sensitiveTopics: string[];
   priorities: string[]; // ordered list of priority labels
   isCaregiver: boolean;
+  currentState?: string;
+  timeEnergy?: string;
+  supportStyle?: string;
+  caregiverNeed?: string;
 };
 
 const KEY = "mentaal.quiz.v1";
