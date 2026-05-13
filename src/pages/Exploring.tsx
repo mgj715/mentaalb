@@ -287,11 +287,10 @@ const Exploring = () => {
   const [query, setQuery] = useState("");
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
 
-  const carouselFiltered = useMemo(
-    () => filterByThemeAndQuery(CAROUSEL_FEED, query, activeTheme),
+  const editorialPicks = useMemo(
+    () => filterByThemeAndQuery(EDITORIAL_PICKS, query, activeTheme) as EditorialPick[],
     [query, activeTheme],
   );
-  const carousel = useMemo(() => interleave(carouselFiltered).slice(0, 6), [carouselFiltered]);
 
   const readItems = useMemo(
     () => interleave(filterByThemeAndQuery(READ_FEED, query, activeTheme)),
