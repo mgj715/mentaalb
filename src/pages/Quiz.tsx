@@ -104,6 +104,7 @@ const Quiz = () => {
   const [params] = useSearchParams();
   const initialMode = params.get("mode"); // "personal" | "caregiver" | null
   const [step, setStep] = useState(1);
+  const [showIntro, setShowIntro] = useState(false);
   const [answers, setAnswers] = useState<QuizState>({
     situation: initialMode === "caregiver" ? "someone" : initialMode === "personal" ? "myself" : "",
     hasDiagnosis: "",
@@ -137,7 +138,6 @@ const Quiz = () => {
   const totalSteps = isCareAbout ? 7 : 6;
 
   const getStepNumber = () => {
-    // Map internal step to display step
     if (step <= 6) return step;
     return 7;
   };
@@ -158,14 +158,20 @@ const Quiz = () => {
     }
   };
 
+  const storedQuiz: StoredQuiz = {
+    situation: answers.situation as "myself" | "someone" | "",
+    sensitiveTopics: answers.sensitiveTopics,
+    priorities: answers.priorities,
+    isCaregiver: isCareAbout,
+    currentState: answers.currentState,
+    timeEnergy: answers.timeEnergy,
+    supportStyle: answers.supportStyle,
+    caregiverNeed: answers.caregiverNeed,
+  };
+
   const finishQuiz = () => {
-    saveQuiz({
-      situation: (answers.situation as "myself" | "someone" | ""),
-      sensitiveTopics: answers.sensitiveTopics,
-      priorities: answers.priorities,
-      isCaregiver: isCareAbout,
-    });
-    navigate(`/tailored?mode=${isCareAbout ? "caregiver" : "personal"}`);
+    saveQuiz(storedQuiz);
+    setShowIntro(true);
   };
 
   const handleNext = () => {
@@ -175,6 +181,7 @@ const Quiz = () => {
     }
     setStep(step + 1);
   };
+
 
   const handleBack = () => {
     if (step === 1) {
