@@ -369,48 +369,39 @@ const Exploring = () => {
           </div>
         </div>
 
-        {/* Carousel preview */}
-        {carousel.length > 0 && (
+        {/* Editorial picks */}
+        {editorialPicks.length > 0 && (
           <section className="-mx-5">
-            <div className="px-5 mb-2 flex items-baseline justify-between">
-              <h2 className="font-display text-lg font-semibold text-charcoal">A taste of what's here</h2>
-              <span className="font-accent text-[11px] text-charcoal/50">scroll →</span>
+            <div className="px-5 mb-2">
+              <h2 className="font-display text-lg font-semibold text-charcoal">Where others have started</h2>
+              <p className="font-accent text-[11px] text-charcoal/55 mt-0.5">A small, hand-picked handful — not a library.</p>
             </div>
             <div className="px-5 overflow-x-auto scrollbar-hide">
-              <div className="flex gap-3 w-max pb-2">
-                {carousel.map((item) => {
+              <div className="flex gap-3.5 w-max pb-2">
+                {editorialPicks.map((item) => {
                   const { tone, chipTone, Icon } = TYPE_STYLES[item.type];
                   return (
                     <article
-                      key={`carousel-${item.id}`}
-                      className={`w-56 shrink-0 rounded-2xl border ${tone} overflow-hidden`}
+                      key={`editorial-${item.id}`}
+                      className={`w-72 shrink-0 rounded-2xl border ${tone} px-5 py-4`}
                     >
-                      {item.type === "Video" ? (
-                        <div className="relative aspect-video w-full bg-gradient-to-br from-lavender/60 via-sage/40 to-peach/50 flex items-center justify-center">
-                          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-warm-white/80 text-charcoal shadow-sm">
-                            <Play size={16} className="ml-0.5" />
-                          </span>
-                          {item.duration && (
-                            <span className="absolute bottom-2 right-2 rounded-full bg-charcoal/70 px-2 py-0.5 text-[10px] font-accent text-warm-white">
-                              {item.duration}
-                            </span>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="aspect-video w-full bg-gradient-to-br from-warm-white via-beige to-stone/30 flex items-end p-3">
-                          <Icon size={20} className="text-charcoal/60" />
-                        </div>
-                      )}
-                      <div className="px-3.5 py-3">
+                      <p className="font-display italic text-[13px] text-charcoal/70 leading-snug">
+                        {item.note}
+                      </p>
+                      <div className="mt-2.5 flex items-center gap-2">
                         <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-accent ${chipTone}`}>
                           <Icon size={10} />
                           {item.type}
                         </span>
-                        <p className="font-display text-sm font-semibold text-charcoal leading-snug mt-1.5 line-clamp-2">
-                          {item.title}
-                        </p>
-                        <p className="font-accent text-[11px] text-charcoal/60 mt-1 line-clamp-1">{item.meta}</p>
+                        {item.duration && (
+                          <span className="font-accent text-[10px] text-charcoal/60">{item.duration}</span>
+                        )}
                       </div>
+                      <p className="font-display text-lg font-semibold text-charcoal leading-snug mt-1.5 line-clamp-2">
+                        {item.title}
+                      </p>
+                      <p className="font-accent text-[11px] text-charcoal/60 mt-0.5 line-clamp-1">{item.meta}</p>
+                      <p className="text-xs text-charcoal/70 mt-2 leading-relaxed line-clamp-3">{item.blurb}</p>
                     </article>
                   );
                 })}
