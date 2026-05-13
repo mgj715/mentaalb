@@ -47,7 +47,7 @@ const parseMins = (s: string): number | undefined => {
   return m ? Number(m[1]) : undefined;
 };
 
-// === Read: stories + articles + videos (carousel still uses videos) ===
+// === Read or watch: stories + articles + videos ===
 const READ_FEED: FeedItem[] = [
   ...STORIES.map<FeedItem>((s) => ({
     id: `story-${s.id}`,
@@ -64,6 +64,15 @@ const READ_FEED: FeedItem[] = [
     meta: `${a.category} · ${a.readTime}`,
     blurb: a.summary,
     themes: themesFor(`${a.title} ${a.summary} ${a.category}`, parseMins(a.readTime)),
+  })),
+  ...VIDEOS.map<FeedItem>((v) => ({
+    id: `video-${v.id}`,
+    type: "Video",
+    title: v.title,
+    meta: v.speaker,
+    blurb: v.description,
+    duration: v.duration,
+    themes: themesFor(`${v.title} ${v.description}`, Number(v.duration.split(":")[0])),
   })),
 ];
 
