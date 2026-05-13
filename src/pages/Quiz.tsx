@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft } from "lucide-react";
-import { saveQuiz } from "@/lib/quiz-storage";
+import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope } from "lucide-react";
+import { saveQuiz, type StoredQuiz } from "@/lib/quiz-storage";
+import {
+  personalizedHeading,
+  themeFromQuiz,
+  rankByStyle,
+  filterByThemeAndQuery,
+  READ_FEED,
+  DO_FEED,
+  TALK_FEED,
+  type FeedItem,
+  type ItemType,
+} from "@/lib/exploring-data";
 import {
   DndContext,
   closestCenter,
@@ -25,6 +36,27 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
+const PICK_TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
+  Story: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: BookOpen },
+  Article: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: FileText },
+  Video: { tone: "border-lavender/30 bg-lavender/15", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
+  Exercise: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: Wind },
+  Activity: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Sparkles },
+  Audio: { tone: "border-lavender/30 bg-lavender/15", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
+  Forum: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: MessageCircle },
+  Support: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Stethoscope },
+};
+
+const buildIntroPicks = (q: StoredQuiz): FeedItem[] => {
+  const theme = themeFromQuiz(q);
+  const pick = (feed: FeedItem[]) => {
+    const byTheme = filterByThemeAndQuery(feed, "", theme);
+    const ranked = rankByStyle(byTheme.length ? byTheme : feed, q.supportStyle);
+    return ranked[0];
+  };
+  return [pick(READ_FEED), pick(DO_FEED), pick(TALK_FEED)].filter(Boolean) as FeedItem[];
+};
 
 const SortablePriority = ({ id, index }: { id: string; index: number }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
@@ -72,6 +104,7 @@ const Quiz = () => {
   const [params] = useSearchParams();
   const initialMode = params.get("mode"); // "personal" | "caregiver" | null
   const [step, setStep] = useState(1);
+  const [showIntro, setShowIntro] = useState(false);
   const [answers, setAnswers] = useState<QuizState>({
     situation: initialMode === "caregiver" ? "someone" : initialMode === "personal" ? "myself" : "",
     hasDiagnosis: "",
@@ -105,7 +138,6 @@ const Quiz = () => {
   const totalSteps = isCareAbout ? 7 : 6;
 
   const getStepNumber = () => {
-    // Map internal step to display step
     if (step <= 6) return step;
     return 7;
   };
@@ -126,14 +158,20 @@ const Quiz = () => {
     }
   };
 
+  const storedQuiz: StoredQuiz = {
+    situation: answers.situation as "myself" | "someone" | "",
+    sensitiveTopics: answers.sensitiveTopics,
+    priorities: answers.priorities,
+    isCaregiver: isCareAbout,
+    currentState: answers.currentState,
+    timeEnergy: answers.timeEnergy,
+    supportStyle: answers.supportStyle,
+    caregiverNeed: answers.caregiverNeed,
+  };
+
   const finishQuiz = () => {
-    saveQuiz({
-      situation: (answers.situation as "myself" | "someone" | ""),
-      sensitiveTopics: answers.sensitiveTopics,
-      priorities: answers.priorities,
-      isCaregiver: isCareAbout,
-    });
-    navigate(`/tailored?mode=${isCareAbout ? "caregiver" : "personal"}`);
+    saveQuiz(storedQuiz);
+    setShowIntro(true);
   };
 
   const handleNext = () => {
@@ -143,6 +181,7 @@ const Quiz = () => {
     }
     setStep(step + 1);
   };
+
 
   const handleBack = () => {
     if (step === 1) {
@@ -377,6 +416,61 @@ const Quiz = () => {
         return null;
     }
   };
+
+  if (showIntro) {
+    const heading = personalizedHeading(storedQuiz);
+    const picks = buildIntroPicks(storedQuiz);
+    return (
+      <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+        <SoftBackdrop />
+        <Header />
+        <main className="flex-1 px-5 py-8 space-y-6">
+          <div className="space-y-2">
+            <p className="font-accent text-xs uppercase tracking-wider text-charcoal/55">A space, just for you</p>
+            <h1 className="font-display text-3xl font-semibold text-charcoal leading-tight">
+              {heading.title}
+            </h1>
+            {heading.sub && (
+              <p className="text-sm text-charcoal/70 leading-relaxed">{heading.sub}</p>
+            )}
+          </div>
+
+          <div className="space-y-3">
+            {picks.map((item) => {
+              const { tone, chipTone, Icon } = PICK_TYPE_STYLES[item.type];
+              return (
+                <article key={item.id} className={`rounded-2xl border ${tone} px-4 py-3.5`}>
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-accent ${chipTone}`}>
+                      <Icon size={10} />
+                      {item.type}
+                    </span>
+                    {item.duration && (
+                      <span className="font-accent text-[10px] text-charcoal/60">{item.duration}</span>
+                    )}
+                  </div>
+                  <p className="font-display text-base font-semibold text-charcoal leading-snug mt-1.5">
+                    {item.title}
+                  </p>
+                  <p className="font-accent text-[11px] text-charcoal/60 mt-0.5">{item.meta}</p>
+                  <p className="text-xs text-charcoal/70 mt-2 leading-relaxed line-clamp-3">{item.blurb}</p>
+                </article>
+              );
+            })}
+          </div>
+
+          <Button
+            onClick={() => navigate("/exploring")}
+            className="w-full rounded-full"
+          >
+            Take me there
+            <ArrowRight size={16} className="ml-2" />
+          </Button>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
