@@ -153,19 +153,30 @@ const TALK_FEED: FeedItem[] = [
   },
 ];
 
-// Carousel pulls from READ + a couple of videos for visual variety.
-const CAROUSEL_FEED: FeedItem[] = [
-  ...READ_FEED,
-  ...VIDEOS.map<FeedItem>((v) => ({
-    id: `video-${v.id}`,
-    type: "Video",
-    title: v.title,
-    meta: v.speaker,
-    blurb: v.description,
-    duration: v.duration,
-    themes: themesFor(`${v.title} ${v.description}`, Number(v.duration.split(":")[0])),
-  })),
-];
+// Editorial picks — hand-curated with a warm one-line note above each.
+type EditorialPick = FeedItem & { note: string };
+
+const pickFromFeed = (feed: FeedItem[], match: RegExp): FeedItem | undefined =>
+  feed.find((i) => match.test(i.title.toLowerCase()) || match.test(i.blurb.toLowerCase()));
+
+const EDITORIAL_PICKS: EditorialPick[] = [
+  {
+    ...(READ_FEED.find((i) => i.type === "Story") ?? READ_FEED[0]),
+    note: "For when you don't have words yet",
+  },
+  {
+    ...(DO_FEED.find((i) => /breath|breathing/i.test(i.meta)) ?? DO_FEED[0]),
+    note: "A good place to begin",
+  },
+  {
+    ...(READ_FEED.find((i) => i.type === "Video") ?? READ_FEED[1] ?? READ_FEED[0]),
+    note: "Five quiet minutes, if you have them",
+  },
+  {
+    ...(TALK_FEED[0]),
+    note: "When sitting alone gets heavy",
+  },
+].filter(Boolean) as EditorialPick[];
 
 // Interleave types so the feed reads like a curated browse.
 const interleave = (items: FeedItem[]) => {
