@@ -412,7 +412,7 @@ const Exploring = () => {
 
         {/* Three themed rows */}
         <Row
-          title="Something to read"
+          title="Something to read or watch"
           items={readItems}
           seeAllHref="/resources"
           emptyHint="Nothing matches this theme yet — try another."
