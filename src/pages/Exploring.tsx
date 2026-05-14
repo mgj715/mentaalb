@@ -132,7 +132,7 @@ const Exploring = () => {
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         <button
-          onClick={() => navigate(quiz ? "/your-space" : -1)}
+          onClick={() => (quiz ? navigate("/your-space") : navigate(-1))}
           className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
         >
           <ChevronLeft size={16} />
