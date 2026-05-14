@@ -153,6 +153,8 @@ const Quiz = () => {
     timeEnergy: answers.timeEnergy,
     supportStyle: answers.supportStyle,
     caregiverNeed: answers.caregiverNeed,
+    hasDiagnosis: answers.hasDiagnosis,
+    diagnosis: answers.diagnosis,
   };
 
   const finishQuiz = () => {
