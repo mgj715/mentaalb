@@ -446,7 +446,7 @@ const Quiz = () => {
           </div>
 
           <Button
-            onClick={() => navigate("/exploring")}
+            onClick={() => navigate("/your-space")}
             className="w-full rounded-full"
           >
             Take me there
