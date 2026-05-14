@@ -197,19 +197,7 @@ const ForumThread = () => {
                 </Button>
               </form>
             ) : (
-              <div className="rounded-2xl border border-lavender/30 bg-lavender/15 px-4 py-3.5 space-y-2">
-                <p className="text-sm text-charcoal">
-                  Sign in to share a post or reply.
-                </p>
-                <p className="text-xs text-charcoal/70">
-                  Reading is open to everyone — contributing needs an account.
-                </p>
-                <Link to={authRedirect}>
-                  <Button size="sm" className="w-full mt-1 rounded-full">
-                    Sign in to contribute
-                  </Button>
-                </Link>
-              </div>
+              <SignInPrompt action="post here" />
             )}
 
             {/* Posts list */}
