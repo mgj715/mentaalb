@@ -9,9 +9,27 @@ export type StoredQuiz = {
   timeEnergy?: string;
   supportStyle?: string;
   caregiverNeed?: string;
+  hasDiagnosis?: string;
+  diagnosis?: string;
 };
 
 const KEY = "mentaal.quiz.v1";
+
+export const hasQuiz = (): boolean => {
+  try {
+    return !!localStorage.getItem(KEY);
+  } catch {
+    return false;
+  }
+};
+
+export const clearQuiz = () => {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    // ignore
+  }
+};
 
 export const saveQuiz = (q: StoredQuiz) => {
   try {
