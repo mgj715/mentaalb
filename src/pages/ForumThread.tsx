@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SignInPrompt from "@/components/SignInPrompt";
 import { FORUM_CATEGORY_GROUPS, type ForumThread as ThreadMeta } from "@/data/forumCategories";
 import { getMockPosts } from "@/data/mockThreadReplies";
 
