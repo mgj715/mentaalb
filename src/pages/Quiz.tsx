@@ -9,12 +9,7 @@ import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft, BookOpen, FileText, P
 import { saveQuiz, type StoredQuiz } from "@/lib/quiz-storage";
 import {
   personalizedHeading,
-  themeFromQuiz,
-  rankByStyle,
-  filterByThemeAndQuery,
-  READ_FEED,
-  DO_FEED,
-  TALK_FEED,
+  buildPersonalPicks,
   type FeedItem,
   type ItemType,
 } from "@/lib/exploring-data";
@@ -48,15 +43,6 @@ const PICK_TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon:
   Support: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Stethoscope },
 };
 
-const buildIntroPicks = (q: StoredQuiz): FeedItem[] => {
-  const theme = themeFromQuiz(q);
-  const pick = (feed: FeedItem[]) => {
-    const byTheme = filterByThemeAndQuery(feed, "", theme);
-    const ranked = rankByStyle(byTheme.length ? byTheme : feed, q.supportStyle);
-    return ranked[0];
-  };
-  return [pick(READ_FEED), pick(DO_FEED), pick(TALK_FEED)].filter(Boolean) as FeedItem[];
-};
 
 const SortablePriority = ({ id, index }: { id: string; index: number }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
