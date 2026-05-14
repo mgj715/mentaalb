@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope, RefreshCw } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
+import CaregiverJourney from "@/components/CaregiverJourney";
 import { loadQuiz } from "@/lib/quiz-storage";
 import {
   buildPersonalPicks,
