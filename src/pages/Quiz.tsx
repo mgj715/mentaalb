@@ -6,7 +6,7 @@ import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope } from "lucide-react";
-import { saveQuiz, type StoredQuiz } from "@/lib/quiz-storage";
+import { saveQuiz, loadQuiz, type StoredQuiz } from "@/lib/quiz-storage";
 import {
   personalizedHeading,
   buildPersonalPicks,
@@ -91,16 +91,24 @@ const Quiz = () => {
   const initialMode = params.get("mode"); // "personal" | "caregiver" | null
   const [step, setStep] = useState(1);
   const [showIntro, setShowIntro] = useState(false);
-  const [answers, setAnswers] = useState<QuizState>({
-    situation: initialMode === "caregiver" ? "someone" : initialMode === "personal" ? "myself" : "",
-    hasDiagnosis: "",
-    diagnosis: "",
-    sensitiveTopics: [],
-    priorities: [...initialPriorities],
-    currentState: "",
-    timeEnergy: "",
-    supportStyle: "",
-    caregiverNeed: "",
+  const [answers, setAnswers] = useState<QuizState>(() => {
+    const stored = loadQuiz();
+    return {
+      situation:
+        initialMode === "caregiver"
+          ? "someone"
+          : initialMode === "personal"
+          ? "myself"
+          : stored?.situation ?? "",
+      hasDiagnosis: stored?.hasDiagnosis ?? "",
+      diagnosis: stored?.diagnosis ?? "",
+      sensitiveTopics: stored?.sensitiveTopics ?? [],
+      priorities: stored?.priorities?.length ? stored.priorities : [...initialPriorities],
+      currentState: stored?.currentState ?? "",
+      timeEnergy: stored?.timeEnergy ?? "",
+      supportStyle: stored?.supportStyle ?? "",
+      caregiverNeed: stored?.caregiverNeed ?? "",
+    };
   });
   
 
@@ -153,6 +161,8 @@ const Quiz = () => {
     timeEnergy: answers.timeEnergy,
     supportStyle: answers.supportStyle,
     caregiverNeed: answers.caregiverNeed,
+    hasDiagnosis: answers.hasDiagnosis,
+    diagnosis: answers.diagnosis,
   };
 
   const finishQuiz = () => {

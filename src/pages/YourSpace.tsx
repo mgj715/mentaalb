@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope, RefreshCw } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
+import CaregiverJourney from "@/components/CaregiverJourney";
 import { loadQuiz } from "@/lib/quiz-storage";
 import {
   buildPersonalPicks,
@@ -90,6 +91,8 @@ const YourSpace = () => {
           </div>
         </section>
 
+        {quiz?.isCaregiver && <CaregiverJourney />}
+
         <div className="pt-2">
           <div className="h-px bg-stone/50" />
           <div className="pt-6 text-center space-y-3">
@@ -102,6 +105,14 @@ const YourSpace = () => {
               Explore freely
               <ArrowRight size={16} className="ml-2" />
             </Button>
+          </div>
+          <div className="pt-6 text-center">
+            <Link
+              to="/quiz"
+              className="font-accent text-xs text-charcoal/55 hover:text-charcoal transition-colors"
+            >
+              Update your preferences →
+            </Link>
           </div>
         </div>
       </main>

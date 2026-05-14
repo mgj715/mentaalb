@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SignInPrompt from "@/components/SignInPrompt";
 import { FORUM_CATEGORY_GROUPS, type ForumThread as ThreadMeta } from "@/data/forumCategories";
 import { getMockPosts } from "@/data/mockThreadReplies";
 
@@ -141,7 +142,7 @@ const ForumThread = () => {
     loadThread();
   };
 
-  const authRedirect = `/auth?redirect=${encodeURIComponent(`/forums/${slug}/${threadId}`)}`;
+  
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
@@ -196,19 +197,7 @@ const ForumThread = () => {
                 </Button>
               </form>
             ) : (
-              <div className="rounded-2xl border border-lavender/30 bg-lavender/15 px-4 py-3.5 space-y-2">
-                <p className="text-sm text-charcoal">
-                  Sign in to share a post or reply.
-                </p>
-                <p className="text-xs text-charcoal/70">
-                  Reading is open to everyone — contributing needs an account.
-                </p>
-                <Link to={authRedirect}>
-                  <Button size="sm" className="w-full mt-1 rounded-full">
-                    Sign in to contribute
-                  </Button>
-                </Link>
-              </div>
+              <SignInPrompt action="post here" />
             )}
 
             {/* Posts list */}
@@ -244,12 +233,7 @@ const ForumThread = () => {
                   )}
 
                   {!user && (
-                    <Link
-                      to={authRedirect}
-                      className="inline-block text-xs text-primary hover:underline"
-                    >
-                      Sign in to reply
-                    </Link>
+                    <SignInPrompt action="reply here" />
                   )}
                 </article>
               ))}
@@ -312,12 +296,7 @@ const ForumThread = () => {
                           </Button>
                         </div>
                       ) : (
-                        <Link
-                          to={authRedirect}
-                          className="inline-block text-xs text-primary hover:underline"
-                        >
-                          Sign in to reply
-                        </Link>
+                        <SignInPrompt action="reply here" />
                       )}
                     </article>
                   );

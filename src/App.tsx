@@ -18,6 +18,8 @@ import Resources from "./pages/Resources.tsx";
 import Tools from "./pages/Tools.tsx";
 import Activities from "./pages/Activities.tsx";
 import YourSpace from "./pages/YourSpace.tsx";
+import CaregiverStage from "./pages/CaregiverStage.tsx";
+import SmallCircle from "./pages/SmallCircle.tsx";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +35,8 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/exploring" element={<Exploring />} />
             <Route path="/your-space" element={<YourSpace />} />
+            <Route path="/caregiver/:stage" element={<CaregiverStage />} />
+            <Route path="/small-circle" element={<SmallCircle />} />
             <Route path="/forums" element={<Forums />} />
             <Route path="/forums/:slug" element={<ForumCategory />} />
             <Route path="/forums/:slug/:threadId" element={<ForumThread />} />
