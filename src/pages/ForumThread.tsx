@@ -142,7 +142,7 @@ const ForumThread = () => {
     loadThread();
   };
 
-  const authRedirect = `/auth?redirect=${encodeURIComponent(`/forums/${slug}/${threadId}`)}`;
+  
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
