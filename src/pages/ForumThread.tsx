@@ -233,12 +233,7 @@ const ForumThread = () => {
                   )}
 
                   {!user && (
-                    <Link
-                      to={authRedirect}
-                      className="inline-block text-xs text-primary hover:underline"
-                    >
-                      Sign in to reply
-                    </Link>
+                    <SignInPrompt action="reply here" />
                   )}
                 </article>
               ))}
