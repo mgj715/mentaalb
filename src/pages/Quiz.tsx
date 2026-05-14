@@ -405,7 +405,7 @@ const Quiz = () => {
 
   if (showIntro) {
     const heading = personalizedHeading(storedQuiz);
-    const picks = buildIntroPicks(storedQuiz);
+    const picks = buildPersonalPicks(storedQuiz);
     return (
       <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
         <SoftBackdrop />
