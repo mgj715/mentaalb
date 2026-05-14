@@ -379,3 +379,59 @@ export const personalizedHeading = (q: StoredQuiz | null): { title: string; sub:
     sub: "Take what helps. Leave what doesn't.",
   };
 };
+
+// === Caregiver Journey ===
+
+export type CaregiverStage = {
+  id: "understand" | "support" | "self-care";
+  title: string;
+  description: string;
+  match: (item: FeedItem) => boolean;
+};
+
+export const CAREGIVER_STAGES: CaregiverStage[] = [
+  {
+    id: "understand",
+    title: "Understanding what they're going through",
+    description: "Recognising the signs and what mental health struggles can feel like.",
+    match: (i) =>
+      /understand|recogniz|sign|symptom|what (is|are)|first year|learned|story|experienc/i.test(
+        `${i.title} ${i.blurb} ${i.meta}`,
+      ),
+  },
+  {
+    id: "support",
+    title: "How to be there for them",
+    description: "Practical guidance on supporting a loved one without burning out.",
+    match: (i) =>
+      /support|help|listen|conversation|talking|friend|loved|partner|family|caregiver|be there/i.test(
+        `${i.title} ${i.blurb} ${i.meta}`,
+      ),
+  },
+  {
+    id: "self-care",
+    title: "Looking after yourself",
+    description: "Self-care, rest, and small resets — for the person doing the caring.",
+    match: (i) =>
+      /breath|ground|calm|rest|burnout|self|boundar|small reset|meditation|circle/i.test(
+        `${i.title} ${i.blurb} ${i.meta}`,
+      ),
+  },
+];
+
+export const stageContent = (stageId: CaregiverStage["id"]): FeedItem[] => {
+  const stage = CAREGIVER_STAGES.find((s) => s.id === stageId);
+  if (!stage) return [];
+  const all = [...READ_FEED, ...DO_FEED, ...TALK_FEED];
+  const matched = all.filter(stage.match);
+  // dedupe by id, cap at 8
+  const seen = new Set<string>();
+  const out: FeedItem[] = [];
+  for (const item of matched) {
+    if (seen.has(item.id)) continue;
+    seen.add(item.id);
+    out.push(item);
+    if (out.length >= 8) break;
+  }
+  return out;
+};
