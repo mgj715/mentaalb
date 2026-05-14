@@ -11,7 +11,8 @@ import {
 
 const NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/exploring", label: "Explore" },
+  { to: "/your-space", label: "Your Space" },
+  { to: "/exploring", label: "Explore freely" },
   { to: "/tailored", label: "Tailored for you" },
   { to: "/resources", label: "Resources" },
   { to: "/tools", label: "Tools & exercises" },

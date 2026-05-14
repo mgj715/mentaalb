@@ -132,11 +132,11 @@ const Exploring = () => {
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => (quiz ? navigate("/your-space") : navigate(-1))}
           className="inline-flex items-center gap-1 text-sm font-accent text-charcoal/70 hover:text-charcoal transition-colors"
         >
           <ChevronLeft size={16} />
-          Back
+          {quiz ? "Back to your space" : "Back"}
         </button>
 
         <div className="space-y-2">
@@ -145,6 +145,18 @@ const Exploring = () => {
             Wander through stories, ideas, and small practices. Take what helps.
           </p>
         </div>
+
+        {!quiz && (
+          <button
+            onClick={() => navigate("/quiz")}
+            className="w-full text-left rounded-2xl border border-lavender/40 bg-lavender/15 px-4 py-3 hover:bg-lavender/25 transition-colors"
+          >
+            <p className="font-display text-sm text-charcoal">
+              Want a more personal experience?{" "}
+              <span className="font-accent text-charcoal/70">Answer a few questions →</span>
+            </p>
+          </button>
+        )}
 
         <label className="flex items-center gap-2 rounded-full border border-stone/60 bg-warm-white/80 px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-ring/50">
           <Search size={16} className="text-charcoal/50" />
