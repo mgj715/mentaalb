@@ -310,6 +310,37 @@ export const personalizedEditorial = (q: StoredQuiz | null): EditorialPick[] => 
   return picks.length ? picks : DEFAULT_EDITORIAL;
 };
 
+// Pick 3 personalized items (one from each feed) with optional offset for "refresh".
+export const buildPersonalPicks = (q: StoredQuiz | null, offset = 0): FeedItem[] => {
+  const theme = themeFromQuiz(q);
+  const pickFrom = (feed: FeedItem[]): FeedItem | undefined => {
+    const themed = theme ? feed.filter((i) => i.themes.includes(theme)) : feed;
+    const ranked = rankByStyle(themed.length ? themed : feed, q?.supportStyle);
+    if (!ranked.length) return undefined;
+    return ranked[offset % ranked.length];
+  };
+  return [pickFrom(READ_FEED), pickFrom(DO_FEED), pickFrom(TALK_FEED)].filter(Boolean) as FeedItem[];
+};
+
+// A short, situation-aware header for the personal home page.
+export const personalSpaceHeader = (q: StoredQuiz | null): { title: string; sub?: string } => {
+  if (!q) return { title: "No pressure. Stay as long as you need." };
+  if (q.isCaregiver)
+    return {
+      title: "You're looking after someone.",
+      sub: "This is where you look after yourself.",
+    };
+  if (q.currentState === "I'm feeling overwhelmed")
+    return { title: "You showed up. That's enough for today." };
+  if (q.currentState === "I don't know where to start")
+    return { title: "Starting small is still starting." };
+  if (q.currentState === "I'm looking for guidance")
+    return { title: "A gentle place to land." };
+  if (q.currentState === "I'm worried about someone else")
+    return { title: "Caring for someone takes care, too." };
+  return { title: "No pressure. Stay as long as you need." };
+};
+
 export const personalizedHeading = (q: StoredQuiz | null): { title: string; sub: string } => {
   if (!q) return { title: "We've put together a space for you.", sub: "" };
   if (q.isCaregiver) {
