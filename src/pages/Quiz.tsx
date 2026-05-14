@@ -6,7 +6,7 @@ import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope } from "lucide-react";
-import { saveQuiz, type StoredQuiz } from "@/lib/quiz-storage";
+import { saveQuiz, loadQuiz, type StoredQuiz } from "@/lib/quiz-storage";
 import {
   personalizedHeading,
   buildPersonalPicks,
