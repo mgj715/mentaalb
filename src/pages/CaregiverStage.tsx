@@ -4,7 +4,7 @@ import { ChevronLeft, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, S
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
-import SignInPrompt from "@/components/SignInPrompt";
+
 import { markStageVisited } from "@/components/CaregiverJourney";
 import { CAREGIVER_STAGES, stageContent, type FeedItem, type ItemType } from "@/lib/exploring-data";
 
