@@ -91,16 +91,24 @@ const Quiz = () => {
   const initialMode = params.get("mode"); // "personal" | "caregiver" | null
   const [step, setStep] = useState(1);
   const [showIntro, setShowIntro] = useState(false);
-  const [answers, setAnswers] = useState<QuizState>({
-    situation: initialMode === "caregiver" ? "someone" : initialMode === "personal" ? "myself" : "",
-    hasDiagnosis: "",
-    diagnosis: "",
-    sensitiveTopics: [],
-    priorities: [...initialPriorities],
-    currentState: "",
-    timeEnergy: "",
-    supportStyle: "",
-    caregiverNeed: "",
+  const [answers, setAnswers] = useState<QuizState>(() => {
+    const stored = loadQuiz();
+    return {
+      situation:
+        initialMode === "caregiver"
+          ? "someone"
+          : initialMode === "personal"
+          ? "myself"
+          : stored?.situation ?? "",
+      hasDiagnosis: stored?.hasDiagnosis ?? "",
+      diagnosis: stored?.diagnosis ?? "",
+      sensitiveTopics: stored?.sensitiveTopics ?? [],
+      priorities: stored?.priorities?.length ? stored.priorities : [...initialPriorities],
+      currentState: stored?.currentState ?? "",
+      timeEnergy: stored?.timeEnergy ?? "",
+      supportStyle: stored?.supportStyle ?? "",
+      caregiverNeed: stored?.caregiverNeed ?? "",
+    };
   });
   
 
