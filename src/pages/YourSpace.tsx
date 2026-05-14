@@ -91,6 +91,8 @@ const YourSpace = () => {
           </div>
         </section>
 
+        {quiz?.isCaregiver && <CaregiverJourney />}
+
         <div className="pt-2">
           <div className="h-px bg-stone/50" />
           <div className="pt-6 text-center space-y-3">
@@ -103,6 +105,14 @@ const YourSpace = () => {
               Explore freely
               <ArrowRight size={16} className="ml-2" />
             </Button>
+          </div>
+          <div className="pt-6 text-center">
+            <Link
+              to="/quiz"
+              className="font-accent text-xs text-charcoal/55 hover:text-charcoal transition-colors"
+            >
+              Update your preferences →
+            </Link>
           </div>
         </div>
       </main>
