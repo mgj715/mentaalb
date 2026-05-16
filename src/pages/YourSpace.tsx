@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope, RefreshCw } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import CaregiverJourney from "@/components/CaregiverJourney";
-import { loadQuiz } from "@/lib/quiz-storage";
+import { loadQuiz, clearQuiz } from "@/lib/quiz-storage";
 import {
   buildPersonalPicks,
   personalSpaceHeader,
@@ -51,9 +52,16 @@ const YourSpace = () => {
   const navigate = useNavigate();
   const quiz = useMemo(() => loadQuiz(), []);
   const [offset, setOffset] = useState(0);
+  const [prefsOpen, setPrefsOpen] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
 
   const heading = useMemo(() => personalSpaceHeader(quiz), [quiz]);
   const picks = useMemo(() => buildPersonalPicks(quiz, offset), [quiz, offset]);
+
+  const handleStartFresh = () => {
+    clearQuiz();
+    window.location.href = "/";
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
@@ -107,16 +115,71 @@ const YourSpace = () => {
             </Button>
           </div>
           <div className="pt-6 text-center">
-            <Link
-              to="/quiz"
+            <button
+              onClick={() => setPrefsOpen(true)}
               className="font-accent text-xs text-charcoal/55 hover:text-charcoal transition-colors"
             >
               Update your preferences →
-            </Link>
+            </button>
           </div>
         </div>
       </main>
       <Footer />
+
+      <Dialog open={prefsOpen} onOpenChange={(o) => { setPrefsOpen(o); if (!o) setConfirmReset(false); }}>
+        <DialogContent className="max-w-sm bg-warm-white border-sage/30 rounded-2xl">
+          {!confirmReset ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="font-display text-xl text-charcoal text-left">
+                  Update your space
+                </DialogTitle>
+                <DialogDescription className="text-sm text-charcoal/70 text-left">
+                  Adjust what's here, or start over.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col gap-2 mt-2">
+                <Button
+                  onClick={() => { setPrefsOpen(false); navigate("/quiz"); }}
+                  className="w-full rounded-full"
+                >
+                  Update my answers
+                </Button>
+                <Button
+                  onClick={() => setConfirmReset(true)}
+                  variant="outline"
+                  className="w-full rounded-full"
+                >
+                  Start fresh
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <DialogHeader>
+                <DialogTitle className="font-display text-xl text-charcoal text-left">
+                  Are you sure?
+                </DialogTitle>
+                <DialogDescription className="text-sm text-charcoal/70 text-left">
+                  This will reset your space. You'll start fresh, like the first time you visited.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0 mt-2">
+                <Button onClick={handleStartFresh} className="w-full rounded-full">
+                  Yes, start fresh
+                </Button>
+                <Button
+                  onClick={() => { setPrefsOpen(false); setConfirmReset(false); }}
+                  variant="outline"
+                  className="w-full rounded-full"
+                >
+                  Never mind
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

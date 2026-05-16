@@ -1,6 +1,7 @@
-import { Menu } from "lucide-react";
+import { Menu, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { clearQuiz } from "@/lib/quiz-storage";
 import {
   Sheet,
   SheetContent,
@@ -60,6 +61,19 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            <div className="mt-6 pt-4 border-t border-sage/20">
+              <button
+                onClick={() => {
+                  clearQuiz();
+                  setOpen(false);
+                  window.location.href = "/";
+                }}
+                className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs text-charcoal/40 hover:text-charcoal/70 transition-colors"
+              >
+                <RefreshCw size={11} />
+                Reset session
+              </button>
+            </div>
           </nav>
         </SheetContent>
       </Sheet>
