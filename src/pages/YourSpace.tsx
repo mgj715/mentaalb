@@ -140,7 +140,7 @@ const YourSpace = () => {
               </DialogHeader>
               <div className="flex flex-col gap-2 mt-2">
                 <Button
-                  onClick={() => { setPrefsOpen(false); navigate("/quiz"); }}
+                  onClick={() => { setPrefsOpen(false); navigate("/quiz?edit=1"); }}
                   className="w-full rounded-full"
                 >
                   Update my answers
@@ -161,7 +161,7 @@ const YourSpace = () => {
                   Are you sure?
                 </DialogTitle>
                 <DialogDescription className="text-sm text-charcoal/70 text-left">
-                  This will reset your space. You'll start fresh, like the first time you visited.
+                  This will reset your space. You'll start fresh, like the first time you visited. Are you sure?
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0 mt-2">
