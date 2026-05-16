@@ -115,16 +115,71 @@ const YourSpace = () => {
             </Button>
           </div>
           <div className="pt-6 text-center">
-            <Link
-              to="/quiz"
+            <button
+              onClick={() => setPrefsOpen(true)}
               className="font-accent text-xs text-charcoal/55 hover:text-charcoal transition-colors"
             >
               Update your preferences →
-            </Link>
+            </button>
           </div>
         </div>
       </main>
       <Footer />
+
+      <Dialog open={prefsOpen} onOpenChange={(o) => { setPrefsOpen(o); if (!o) setConfirmReset(false); }}>
+        <DialogContent className="max-w-sm bg-warm-white border-sage/30 rounded-2xl">
+          {!confirmReset ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="font-display text-xl text-charcoal text-left">
+                  Update your space
+                </DialogTitle>
+                <DialogDescription className="text-sm text-charcoal/70 text-left">
+                  Adjust what's here, or start over.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col gap-2 mt-2">
+                <Button
+                  onClick={() => { setPrefsOpen(false); navigate("/quiz"); }}
+                  className="w-full rounded-full"
+                >
+                  Update my answers
+                </Button>
+                <Button
+                  onClick={() => setConfirmReset(true)}
+                  variant="outline"
+                  className="w-full rounded-full"
+                >
+                  Start fresh
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <DialogHeader>
+                <DialogTitle className="font-display text-xl text-charcoal text-left">
+                  Are you sure?
+                </DialogTitle>
+                <DialogDescription className="text-sm text-charcoal/70 text-left">
+                  This will reset your space. You'll start fresh, like the first time you visited.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0 mt-2">
+                <Button onClick={handleStartFresh} className="w-full rounded-full">
+                  Yes, start fresh
+                </Button>
+                <Button
+                  onClick={() => { setPrefsOpen(false); setConfirmReset(false); }}
+                  variant="outline"
+                  className="w-full rounded-full"
+                >
+                  Never mind
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
