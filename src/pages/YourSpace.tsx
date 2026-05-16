@@ -5,8 +5,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import CaregiverJourney from "@/components/CaregiverJourney";
-import { loadQuiz } from "@/lib/quiz-storage";
+import { loadQuiz, clearQuiz } from "@/lib/quiz-storage";
 import {
   buildPersonalPicks,
   personalSpaceHeader,
