@@ -52,9 +52,16 @@ const YourSpace = () => {
   const navigate = useNavigate();
   const quiz = useMemo(() => loadQuiz(), []);
   const [offset, setOffset] = useState(0);
+  const [prefsOpen, setPrefsOpen] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
 
   const heading = useMemo(() => personalSpaceHeader(quiz), [quiz]);
   const picks = useMemo(() => buildPersonalPicks(quiz, offset), [quiz, offset]);
+
+  const handleStartFresh = () => {
+    clearQuiz();
+    window.location.href = "/";
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
