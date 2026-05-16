@@ -4,8 +4,14 @@ import WhatIsMentaal from "@/components/WhatIsMentaal";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
+import { Navigate } from "react-router-dom";
+import { hasQuiz } from "@/lib/quiz-storage";
 
 const Index = () => {
+  if (hasQuiz()) {
+    return <Navigate to="/your-space" replace />;
+  }
+
   return (
     <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
       <SoftBackdrop />

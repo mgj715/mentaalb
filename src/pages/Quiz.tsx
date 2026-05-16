@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, ArrowLeft, GripVertical, ChevronLeft, BookOpen, FileText, Play, Wind, Sparkles, MessageCircle, Stethoscope } from "lucide-react";
-import { saveQuiz, loadQuiz, type StoredQuiz } from "@/lib/quiz-storage";
+import { saveQuiz, loadQuiz, hasQuiz, type StoredQuiz } from "@/lib/quiz-storage";
 import {
   personalizedHeading,
   buildPersonalPicks,
@@ -89,6 +89,7 @@ const Quiz = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const initialMode = params.get("mode"); // "personal" | "caregiver" | null
+  const isUpdatingAnswers = params.get("edit") === "1";
   const [step, setStep] = useState(1);
   const [showIntro, setShowIntro] = useState(false);
   const [answers, setAnswers] = useState<QuizState>(() => {
@@ -164,6 +165,10 @@ const Quiz = () => {
     hasDiagnosis: answers.hasDiagnosis,
     diagnosis: answers.diagnosis,
   };
+
+  if (hasQuiz() && !isUpdatingAnswers) {
+    return <Navigate to="/your-space" replace />;
+  }
 
   const finishQuiz = () => {
     saveQuiz(storedQuiz);
