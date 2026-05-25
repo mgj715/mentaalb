@@ -10,16 +10,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-const NAV_LINKS = [
+const PRIMARY_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/your-space", label: "Your Space" },
   { to: "/exploring", label: "Explore freely" },
-  { to: "/tailored", label: "Tailored for you" },
-  { to: "/resources", label: "Resources" },
-  { to: "/tools", label: "Tools & exercises" },
-  { to: "/activities", label: "Activities" },
-  { to: "/forums", label: "Forums" },
   { to: "/quiz", label: "Take the quiz" },
+];
+
+const SECONDARY_LINKS = [
   { to: "/about", label: "About" },
   { to: "/auth", label: "Sign in" },
 ];
@@ -52,7 +49,18 @@ const Header = () => {
             </SheetTitle>
           </SheetHeader>
           <nav className="mt-8 flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
+            {PRIMARY_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setOpen(false)}
+                className="rounded-2xl px-4 py-3 font-display text-lg text-charcoal hover:bg-sage/30 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="my-3 border-t border-sage/20" />
+            {SECONDARY_LINKS.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
