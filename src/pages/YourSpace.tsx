@@ -103,6 +103,12 @@ const YourSpace = () => {
 
         <div className="pt-2">
           <div className="h-px bg-stone/50" />
+          <p className="pt-6 text-center font-accent text-xs text-charcoal/55">
+            New to Mentaal or want to learn more?{" "}
+            <a href="/about" className="underline hover:text-charcoal transition-colors">
+              About Mentaal
+            </a>
+          </p>
           <div className="pt-6 text-center space-y-3">
             <p className="font-display text-base text-charcoal/80">Want to wander further?</p>
             <Button

@@ -20,6 +20,7 @@ import Activities from "./pages/Activities.tsx";
 import YourSpace from "./pages/YourSpace.tsx";
 import CaregiverStage from "./pages/CaregiverStage.tsx";
 import SmallCircle from "./pages/SmallCircle.tsx";
+import About from "./pages/About.tsx";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/resources" element={<Resources />} />
             <Route path="/tools" element={<Tools />} />
             <Route path="/activities" element={<Activities />} />
+            <Route path="/about" element={<About />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
