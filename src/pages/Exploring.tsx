@@ -146,18 +146,6 @@ const Exploring = () => {
           </p>
         </div>
 
-        {!quiz && (
-          <button
-            onClick={() => navigate("/quiz")}
-            className="w-full text-left rounded-2xl border border-lavender/40 bg-lavender/15 px-4 py-3 hover:bg-lavender/25 transition-colors"
-          >
-            <p className="font-display text-sm text-charcoal">
-              Want a more personal experience?{" "}
-              <span className="font-accent text-charcoal/70">Answer a few questions →</span>
-            </p>
-          </button>
-        )}
-
         <label className="flex items-center gap-2 rounded-full border border-stone/60 bg-warm-white/80 px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-ring/50">
           <Search size={16} className="text-charcoal/50" />
           <input
