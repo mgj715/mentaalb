@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import mentaalLogo from "@/assets/mentaal-logo.svg";
 
 const PRIMARY_LINKS = [
   { to: "/", label: "Home" },
@@ -28,10 +29,10 @@ const Header = () => {
     <header className="relative flex items-center justify-between px-5 py-4">
       <Link
         to="/"
-        className="font-display text-2xl font-semibold tracking-tight text-charcoal hover:text-charcoal/70 transition-colors"
+        className="inline-flex items-center hover:opacity-70 transition-opacity"
         aria-label="Go to homepage"
       >
-        Mentaal
+        <img src={mentaalLogo} alt="Mentaal" className="h-7 w-auto" />
       </Link>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
