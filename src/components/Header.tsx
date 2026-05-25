@@ -20,6 +20,7 @@ const NAV_LINKS = [
   { to: "/activities", label: "Activities" },
   { to: "/forums", label: "Forums" },
   { to: "/quiz", label: "Take the quiz" },
+  { to: "/about", label: "About" },
   { to: "/auth", label: "Sign in" },
 ];
 
