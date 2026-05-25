@@ -157,6 +157,18 @@ const Exploring = () => {
           />
         </label>
 
+        {!quiz && (
+          <button
+            onClick={() => navigate("/quiz")}
+            className="w-full text-left rounded-2xl border border-lavender/40 bg-lavender/15 px-4 py-3 hover:bg-lavender/25 transition-colors"
+          >
+            <p className="font-display text-sm text-charcoal">
+              Want a more personal experience?{" "}
+              <span className="font-accent text-charcoal/70">Answer a few questions →</span>
+            </p>
+          </button>
+        )}
+
         <div className="-mx-5 px-5 overflow-x-auto scrollbar-hide">
           <div className="flex gap-2 w-max pb-1">
             <button
