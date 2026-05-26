@@ -30,7 +30,7 @@ const Header = () => {
     <header className="relative flex items-center justify-between px-5 py-4">
       <Link
         to="/"
-        className="inline-flex items-center font-display text-lg text-charcoal hover:opacity-70 transition-opacity"
+        className="inline-flex items-center font-display text-3xl font-bold text-charcoal hover:opacity-70 transition-opacity"
         aria-label="Go to homepage"
       >
         Mentaal
