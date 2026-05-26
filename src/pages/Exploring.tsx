@@ -146,17 +146,6 @@ const Exploring = () => {
           </p>
         </div>
 
-        <label className="flex items-center gap-2 rounded-full border border-stone/60 bg-warm-white/80 px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-ring/50">
-          <Search size={16} className="text-charcoal/50" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="What's on your mind?"
-            className="flex-1 bg-transparent text-sm text-charcoal placeholder:text-charcoal/50 focus:outline-none"
-          />
-        </label>
-
         {!quiz && (
           <button
             onClick={() => navigate("/quiz")}
@@ -168,6 +157,17 @@ const Exploring = () => {
             </p>
           </button>
         )}
+
+        <label className="flex items-center gap-2 rounded-full border border-stone/60 bg-warm-white/80 px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-ring/50">
+          <Search size={16} className="text-charcoal/50" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="What's on your mind?"
+            className="flex-1 bg-transparent text-sm text-charcoal placeholder:text-charcoal/50 focus:outline-none"
+          />
+        </label>
 
         <div className="-mx-5 px-5 overflow-x-auto scrollbar-hide">
           <div className="flex gap-2 w-max pb-1">
