@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import mentaalLogo from "@/assets/mentaal-logo.svg";
+
 
 const PRIMARY_LINKS = [
   { to: "/", label: "Home" },
