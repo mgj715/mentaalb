@@ -29,10 +29,10 @@ const Header = () => {
     <header className="relative flex items-center justify-between px-5 py-4">
       <Link
         to="/"
-        className="inline-flex items-center hover:opacity-70 transition-opacity"
+        className="inline-flex items-center font-display text-lg text-charcoal hover:opacity-70 transition-opacity"
         aria-label="Go to homepage"
       >
-        <img src={mentaalLogo} alt="Mentaal" className="h-7 w-auto" />
+        Mentaal
       </Link>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
