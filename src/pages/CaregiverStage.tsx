@@ -53,7 +53,7 @@ const CaregiverStage = () => {
 
   if (!meta) {
     return (
-      <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+      <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
         <SoftBackdrop />
         <Header />
         <main className="flex-1 px-5 py-6 space-y-4">
@@ -71,7 +71,7 @@ const CaregiverStage = () => {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col max-w-md mx-auto bg-background overflow-hidden">
+    <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
       <Header />
       <main className="flex-1 px-5 py-6 space-y-6">
