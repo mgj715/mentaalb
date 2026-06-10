@@ -19,6 +19,7 @@ import Tools from "./pages/Tools.tsx";
 import Activities from "./pages/Activities.tsx";
 import YourSpace from "./pages/YourSpace.tsx";
 import CaregiverStage from "./pages/CaregiverStage.tsx";
+import PatientStage from "./pages/PatientStage.tsx";
 import SmallCircle from "./pages/SmallCircle.tsx";
 import About from "./pages/About.tsx";
 
