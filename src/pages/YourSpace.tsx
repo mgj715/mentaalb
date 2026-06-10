@@ -100,7 +100,11 @@ const YourSpace = () => {
           </div>
         </section>
 
-        {quiz?.isCaregiver && <CaregiverJourney />}
+        {quiz?.isCaregiver ? (
+          <CaregiverJourney />
+        ) : quiz?.situation === "myself" ? (
+          <PatientJourney />
+        ) : null}
 
         <div className="pt-2">
           <div className="h-px bg-stone/50" />
