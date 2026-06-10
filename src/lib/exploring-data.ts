@@ -435,3 +435,58 @@ export const stageContent = (stageId: CaregiverStage["id"]): FeedItem[] => {
   }
   return out;
 };
+
+// === Patient Journey ===
+
+export type PatientStage = {
+  id: "understand-self" | "find-help" | "next-step";
+  title: string;
+  description: string;
+  match: (item: FeedItem) => boolean;
+};
+
+export const PATIENT_STAGES: PatientStage[] = [
+  {
+    id: "understand-self",
+    title: "Understanding what's happening to me",
+    description: "Making sense of what you're feeling, recognising it, and giving it a name.",
+    match: (i) =>
+      /understand|recogniz|difference|what (is|are)|story|learned/i.test(
+        `${i.title} ${i.blurb} ${i.meta}`,
+      ),
+  },
+  {
+    id: "find-help",
+    title: "Finding what helps",
+    description: "Small things that have helped others — tools, practices, and stories at your own pace.",
+    match: (i) =>
+      /breath|ground|tool|exercise|practice|small|gentle|calm/i.test(
+        `${i.title} ${i.blurb} ${i.meta}`,
+      ),
+  },
+  {
+    id: "next-step",
+    title: "Taking the next step",
+    description: "When you feel ready — connecting with others or finding the right support.",
+    match: (i) =>
+      /forum|support|therapist|connect|communit|circle|next/i.test(
+        `${i.title} ${i.blurb} ${i.meta}`,
+      ),
+  },
+];
+
+export const patientStageContent = (stageId: PatientStage["id"]): FeedItem[] => {
+  const stage = PATIENT_STAGES.find((s) => s.id === stageId);
+  if (!stage) return [];
+  const all = [...READ_FEED, ...DO_FEED, ...TALK_FEED];
+  const matched = all.filter(stage.match);
+  const seen = new Set<string>();
+  const out: FeedItem[] = [];
+  for (const item of matched) {
+    if (seen.has(item.id)) continue;
+    seen.add(item.id);
+    out.push(item);
+    if (out.length >= 8) break;
+  }
+  return out;
+};
