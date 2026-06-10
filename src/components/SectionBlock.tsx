@@ -1,6 +1,6 @@
 import { BookOpen, Wrench, Sparkles, MessageSquare, Stethoscope, Heart, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Section } from "@/data/sections";
+import { Section, SectionId } from "@/data/sections";
 
 const iconMap = {
   book: BookOpen,
@@ -11,17 +11,22 @@ const iconMap = {
   heart: Heart,
 };
 
-// Soft alternating backgrounds keep the page feeling like a gentle wave.
-const TONES = [
-  "bg-sage/25 border-sage/50",
-  "bg-lavender/20 border-lavender/50",
-  "bg-peach/25 border-peach/50",
-] as const;
+// Card color is driven by content type/section, not by index position.
+const SECTION_TONE: Record<SectionId, string> = {
+  resources: "bg-lavender/25 border-lavender/40 shadow-sm",
+  tools: "bg-sage/25 border-sage/40 shadow-sm",
+  activities: "bg-sage/25 border-sage/40 shadow-sm",
+  forums: "bg-peach/25 border-peach/40 shadow-sm",
+  professional: "bg-white border-stone/30 shadow-sm",
+  caregiver: "bg-peach/25 border-peach/40 shadow-sm",
+};
 
 const SectionBlock = ({ section }: { section: Section }) => {
   const Icon = iconMap[section.icon] ?? BookOpen;
 
   if (section.items.length === 0) return null;
+
+  const tone = SECTION_TONE[section.id];
 
   return (
     <section className="space-y-3">
@@ -32,15 +37,29 @@ const SectionBlock = ({ section }: { section: Section }) => {
         <h2 className="font-display text-2xl font-semibold text-charcoal">{section.title}</h2>
       </div>
       <div className="space-y-2">
-        {section.items.map((item, i) => (
-          <div
-            key={item.title}
-            className={`rounded-2xl border ${TONES[i % TONES.length]} px-4 py-3.5`}
-          >
-            <p className="font-display text-base font-semibold text-charcoal leading-snug">{item.title}</p>
-            <p className="text-xs text-charcoal/70 mt-1 leading-relaxed">{item.description}</p>
-          </div>
-        ))}
+        {section.items.map((item) => {
+          const isCrisis = /crisis/i.test(item.title);
+          if (isCrisis) {
+            return (
+              <div
+                key={item.title}
+                className="rounded-2xl bg-[#1e2329] px-4 py-3.5"
+              >
+                <p className="font-display text-base font-semibold text-warm-white leading-snug">{item.title}</p>
+                <p className="text-xs text-warm-white/75 mt-1 leading-relaxed">{item.description}</p>
+              </div>
+            );
+          }
+          return (
+            <div
+              key={item.title}
+              className={`rounded-2xl border ${tone} px-4 py-3.5`}
+            >
+              <p className="font-display text-base font-semibold text-charcoal leading-snug">{item.title}</p>
+              <p className="text-xs text-charcoal/70 mt-1 leading-relaxed">{item.description}</p>
+            </div>
+          );
+        })}
       </div>
       {section.footer &&
         (section.footer.href ? (
