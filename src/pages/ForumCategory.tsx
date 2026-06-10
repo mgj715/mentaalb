@@ -48,13 +48,8 @@ const ForumCategory = () => {
             </div>
 
             <ul className="space-y-3">
-              {category.threads.map((thread, i) => {
-                const tones = [
-                  "bg-sage/25 border-sage/50",
-                  "bg-lavender/20 border-lavender/50",
-                  "bg-peach/25 border-peach/50",
-                ];
-                const tone = tones[i % tones.length];
+              {category.threads.map((thread) => {
+                const tone = "bg-peach/25 border-peach/40 shadow-sm";
                 return (
                   <li key={thread.id}>
                     <Link

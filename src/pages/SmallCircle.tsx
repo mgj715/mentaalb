@@ -53,7 +53,7 @@ const SmallCircle = () => {
           </p>
         </div>
 
-        <article className="rounded-2xl border border-sage/50 bg-sage/25 shadow-sm px-4 py-3.5 space-y-2">
+        <article className="rounded-2xl border border-peach/40 bg-peach/25 shadow-sm px-4 py-3.5 space-y-2">
           <p className="font-display text-base font-semibold text-charcoal">What to expect</p>
           <ul className="text-sm text-charcoal/75 space-y-1 list-disc pl-4">
             <li>Up to 8 members per circle</li>
