@@ -149,7 +149,7 @@ const Exploring = () => {
         {!quiz && (
           <button
             onClick={() => navigate("/quiz")}
-            className="w-full text-left rounded-2xl border border-lavender/40 bg-lavender/20 px-4 py-3 hover:bg-lavender/25 transition-colors"
+            className="w-full text-left rounded-2xl border-2 border-lavender/60 bg-lavender/30 shadow-sm px-4 py-3 hover:bg-lavender/40 transition-colors"
           >
             <p className="font-display text-sm text-charcoal">
               Want a more personal experience?{" "}
@@ -158,7 +158,7 @@ const Exploring = () => {
           </button>
         )}
 
-        <label className="flex items-center gap-2 rounded-full border border-stone/60 bg-warm-white/80 px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-ring/50">
+        <label className="flex items-center gap-2 rounded-full border border-stone bg-warm-white/80 px-4 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-ring/50">
           <Search size={16} className="text-charcoal/50" />
           <input
             type="text"
@@ -176,7 +176,7 @@ const Exploring = () => {
               className={`whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-accent transition-colors ${
                 activeTheme === null
                   ? "bg-charcoal text-warm-white border-charcoal"
-                  : "bg-warm-white/70 text-charcoal/80 border-stone/60 hover:bg-warm-white"
+                  : "bg-warm-white/70 text-charcoal/80 border-stone hover:bg-warm-white"
               }`}
             >
               All
@@ -190,7 +190,7 @@ const Exploring = () => {
                   className={`whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-accent transition-colors ${
                     active
                       ? "bg-charcoal text-warm-white border-charcoal"
-                      : "bg-warm-white/70 text-charcoal/80 border-stone/60 hover:bg-warm-white"
+                      : "bg-warm-white/70 text-charcoal/80 border-stone hover:bg-warm-white"
                   }`}
                 >
                   {t}
