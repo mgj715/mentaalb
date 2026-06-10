@@ -5,12 +5,8 @@ import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { FORUM_CATEGORY_GROUPS } from "@/data/forumCategories";
 
-// Soft, alternating tones — keeps the list feeling like gentle ripples.
-const GROUP_TONES = [
-  "bg-sage/25 border-sage/50",
-  "bg-lavender/20 border-lavender/50",
-  "bg-peach/25 border-peach/50",
-] as const;
+// All forum cards share the peach tone (community content type).
+const FORUM_TONE = "bg-peach/25 border-peach/40 shadow-sm";
 
 const Forums = () => {
   return (
@@ -39,7 +35,7 @@ const Forums = () => {
         </div>
 
         <div className="space-y-8">
-          {FORUM_CATEGORY_GROUPS.map((group, gi) => (
+          {FORUM_CATEGORY_GROUPS.map((group) => (
             <section key={group.id} className="space-y-3">
               <div className="space-y-1">
                 <h2 className="font-display text-xl font-semibold text-charcoal">
@@ -55,7 +51,7 @@ const Forums = () => {
                   <li key={category.slug}>
                     <Link
                       to={`/forums/${category.slug}`}
-                      className={`flex items-center justify-between gap-3 rounded-2xl border ${GROUP_TONES[gi % GROUP_TONES.length]} px-4 py-3.5 transition-colors hover:bg-card`}
+                      className={`flex items-center justify-between gap-3 rounded-2xl border ${FORUM_TONE} px-4 py-3.5 transition-colors hover:bg-card`}
                     >
                       <div className="min-w-0">
                         <h3 className="font-display text-base font-semibold text-charcoal truncate">
