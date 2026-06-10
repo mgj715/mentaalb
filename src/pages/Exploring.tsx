@@ -233,6 +233,33 @@ const Exploring = () => {
               <div className="flex gap-3.5 w-max pb-2">
                 {editorialPicks.map((item) => {
                   const { tone, chipTone, Icon } = TYPE_STYLES[item.type];
+                  const crisis = isCrisisItem(item.title);
+                  if (crisis) {
+                    return (
+                      <article
+                        key={`editorial-${item.id}`}
+                        className="w-72 shrink-0 rounded-2xl bg-[#1e2329] px-5 py-4"
+                      >
+                        <p className="font-display italic text-[13px] text-warm-white/75 leading-snug">
+                          {item.note}
+                        </p>
+                        <div className="mt-2.5 flex items-center gap-2">
+                          <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-accent bg-warm-white/15 text-warm-white">
+                            <Icon size={10} />
+                            {item.type}
+                          </span>
+                          {item.duration && (
+                            <span className="font-accent text-[10px] text-warm-white/65">{item.duration}</span>
+                          )}
+                        </div>
+                        <p className="font-display text-lg font-semibold text-warm-white leading-snug mt-1.5 line-clamp-2">
+                          {item.title}
+                        </p>
+                        <p className="font-accent text-[11px] text-warm-white/65 mt-0.5 line-clamp-1">{item.meta}</p>
+                        <p className="text-xs text-warm-white/80 mt-2 leading-relaxed line-clamp-3">{item.blurb}</p>
+                      </article>
+                    );
+                  }
                   return (
                     <article
                       key={`editorial-${item.id}`}
