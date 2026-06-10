@@ -38,7 +38,7 @@ const Resources = () => {
             {STORIES.map((s) => (
               <article
                 key={s.id}
-                className="rounded-2xl border border-peach/30 bg-peach/15 px-4 py-3.5"
+                className="rounded-2xl border border-peach/50 bg-peach/25 shadow-sm px-4 py-3.5"
               >
                 <p className="font-display text-base font-semibold text-charcoal leading-snug">
                   {s.title}
@@ -64,7 +64,7 @@ const Resources = () => {
             {ARTICLES.map((a) => (
               <article
                 key={a.id}
-                className="rounded-2xl border border-sage/30 bg-sage/15 px-4 py-3.5"
+                className="rounded-2xl border border-sage/50 bg-sage/25 shadow-sm px-4 py-3.5"
               >
                 <p className="font-accent text-[11px] uppercase tracking-wide text-charcoal/60">
                   {a.category} · {a.readTime}
@@ -90,7 +90,7 @@ const Resources = () => {
             {VIDEOS.map((v) => (
               <article
                 key={v.id}
-                className="rounded-2xl border border-lavender/30 bg-lavender/15 overflow-hidden"
+                className="rounded-2xl border border-lavender/50 bg-lavender/20 shadow-sm overflow-hidden"
               >
                 {/* Video placeholder thumbnail */}
                 <div

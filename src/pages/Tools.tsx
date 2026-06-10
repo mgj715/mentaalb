@@ -38,7 +38,7 @@ const Tools = () => {
             {BREATHING.map((b) => (
               <article
                 key={b.id}
-                className="rounded-2xl border border-sage/30 bg-sage/15 px-4 py-3.5"
+                className="rounded-2xl border border-sage/50 bg-sage/25 shadow-sm px-4 py-3.5"
               >
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">
@@ -71,7 +71,7 @@ const Tools = () => {
             {GROUNDING.map((g) => (
               <article
                 key={g.id}
-                className="rounded-2xl border border-peach/30 bg-peach/15 px-4 py-3.5"
+                className="rounded-2xl border border-peach/50 bg-peach/25 shadow-sm px-4 py-3.5"
               >
                 <p className="font-accent text-[11px] uppercase tracking-wide text-charcoal/60">
                   {g.category}
@@ -97,7 +97,7 @@ const Tools = () => {
             {AUDIO.map((a) => (
               <article
                 key={a.id}
-                className="rounded-2xl border border-lavender/30 bg-lavender/15 overflow-hidden"
+                className="rounded-2xl border border-lavender/50 bg-lavender/20 shadow-sm overflow-hidden"
               >
                 {/* Audio placeholder strip */}
                 <div

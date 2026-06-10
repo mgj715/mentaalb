@@ -206,7 +206,7 @@ const ForumThread = () => {
               {getMockPosts(meta.thread).map((mp) => (
                 <article
                   key={mp.id}
-                  className="rounded-2xl border border-sage/30 bg-card px-4 py-3.5 space-y-3"
+                  className="rounded-2xl border border-sage/50 bg-card px-4 py-3.5 space-y-3"
                 >
                   <div className="flex items-center justify-between text-[11px] text-muted-foreground">
                     <span>{mp.author}</span>
@@ -247,7 +247,7 @@ const ForumThread = () => {
                   return (
                     <article
                       key={post.id}
-                      className="rounded-2xl border border-lavender/30 bg-card px-4 py-3.5 space-y-3"
+                      className="rounded-2xl border border-lavender/50 bg-card px-4 py-3.5 space-y-3"
                     >
                       <div className="flex items-center justify-between text-[11px] text-muted-foreground">
                         <span>{shortAuthor(post.author_id)}</span>

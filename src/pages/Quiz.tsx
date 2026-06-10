@@ -33,14 +33,14 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 
 const PICK_TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
-  Story: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: BookOpen },
-  Article: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: FileText },
-  Video: { tone: "border-lavender/30 bg-lavender/15", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
-  Exercise: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: Wind },
-  Activity: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Sparkles },
-  Audio: { tone: "border-lavender/30 bg-lavender/15", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
-  Forum: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: MessageCircle },
-  Support: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Stethoscope },
+  Story: { tone: "border-peach/50 bg-peach/25 shadow-sm", chipTone: "bg-peach/60 text-charcoal", Icon: BookOpen },
+  Article: { tone: "border-sage/50 bg-sage/25 shadow-sm", chipTone: "bg-sage/60 text-charcoal", Icon: FileText },
+  Video: { tone: "border-lavender/50 bg-lavender/20 shadow-sm", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
+  Exercise: { tone: "border-sage/50 bg-sage/25 shadow-sm", chipTone: "bg-sage/60 text-charcoal", Icon: Wind },
+  Activity: { tone: "border-peach/50 bg-peach/25 shadow-sm", chipTone: "bg-peach/60 text-charcoal", Icon: Sparkles },
+  Audio: { tone: "border-lavender/50 bg-lavender/20 shadow-sm", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
+  Forum: { tone: "border-sage/50 bg-sage/25 shadow-sm", chipTone: "bg-sage/60 text-charcoal", Icon: MessageCircle },
+  Support: { tone: "border-peach/50 bg-peach/25 shadow-sm", chipTone: "bg-peach/60 text-charcoal", Icon: Stethoscope },
 };
 
 
@@ -57,7 +57,7 @@ const SortablePriority = ({ id, index }: { id: string; index: number }) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center gap-3 rounded-2xl border border-sage/30 bg-sage/15 px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
+      className="flex items-center gap-3 rounded-2xl border border-sage/50 bg-sage/25 shadow-sm px-4 py-3.5 cursor-grab active:cursor-grabbing touch-none select-none"
     >
       <GripVertical size={16} className="text-charcoal/60 flex-shrink-0" />
       <span className="text-sm font-medium text-charcoal">{index + 1}. {id}</span>
@@ -217,10 +217,10 @@ const Quiz = () => {
   }) => (
     <button
       onClick={onClick}
-      className={`w-full rounded-2xl border px-5 py-4 text-left transition-colors text-sm font-medium ${
+      className={`w-full rounded-2xl border shadow-sm px-5 py-4 text-left transition-colors text-sm font-medium ${
         selected
-          ? "border-lavender bg-lavender/40 text-charcoal"
-          : "border-sage/30 bg-card text-charcoal hover:bg-sage/15"
+          ? "border-stone border-l-4 border-l-sage bg-lavender/50 text-charcoal"
+          : "border-stone bg-card text-charcoal hover:bg-sage/25"
       }`}
     >
       {label}
@@ -505,14 +505,14 @@ const Quiz = () => {
           <Button
             variant="outline"
             onClick={handleBack}
-            className="rounded-full border-sage/40 bg-card hover:bg-sage/15"
+            className="rounded-full border-sage/40 bg-card hover:bg-sage/25"
           >
             <ArrowLeft size={16} />
           </Button>
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
-            className="flex-1 rounded-full"
+            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-primary-foreground disabled:bg-stone disabled:text-charcoal/50 disabled:opacity-100"
           >
             {(step === totalSteps) ? "Finish" : "Continue"}
             {step < totalSteps && <ArrowRight size={16} className="ml-2" />}
@@ -523,7 +523,7 @@ const Quiz = () => {
         <div className="text-center pt-2">
           <button
             onClick={() => navigate("/exploring")}
-            className="inline-flex flex-col items-center gap-0.5 rounded-2xl border border-peach/40 bg-peach/15 px-5 py-3 text-charcoal hover:bg-peach/25 transition-colors w-full"
+            className="inline-flex flex-col items-center gap-0.5 rounded-2xl border-2 border-peach/60 bg-peach/25 shadow-sm px-5 py-3 text-charcoal hover:bg-peach/35 transition-colors w-full"
           >
             <span className="text-sm font-accent font-semibold">Skip for now</span>
             <span className="text-xs text-charcoal/70">I want to explore freely</span>

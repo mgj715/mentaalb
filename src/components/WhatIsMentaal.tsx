@@ -1,6 +1,6 @@
 const WhatIsMentaal = () => {
   return (
-    <section className="rounded-3xl border border-sage/30 bg-card overflow-hidden shadow-sm">
+    <section className="rounded-3xl border border-sage/50 bg-card overflow-hidden shadow-sm">
       <div className="flex flex-col md:flex-row">
         <div className="flex-1 p-6 flex flex-col justify-center">
           <h2 className="font-display text-2xl font-semibold text-charcoal mb-2">What is Mentaal?</h2>

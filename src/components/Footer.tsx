@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="mt-12 border-t border-sage/30 px-5 py-6 text-center">
+    <footer className="mt-12 border-t border-sage/50 px-5 py-6 text-center">
       <nav className="flex flex-wrap justify-center gap-4 text-sm text-charcoal/60">
         <Link to="/about" className="hover:text-charcoal transition-colors">
           About
