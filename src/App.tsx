@@ -38,6 +38,7 @@ const App = () => (
             <Route path="/exploring" element={<Exploring />} />
             <Route path="/your-space" element={<YourSpace />} />
             <Route path="/caregiver/:stage" element={<CaregiverStage />} />
+            <Route path="/patient/:stage" element={<PatientStage />} />
             <Route path="/small-circle" element={<SmallCircle />} />
             <Route path="/forums" element={<Forums />} />
             <Route path="/forums/:slug" element={<ForumCategory />} />
