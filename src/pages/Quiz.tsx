@@ -523,7 +523,7 @@ const Quiz = () => {
         <div className="text-center pt-2">
           <button
             onClick={() => navigate("/exploring")}
-            className="inline-flex flex-col items-center gap-0.5 rounded-2xl border border-peach/40 bg-peach/25 px-5 py-3 text-charcoal hover:bg-peach/25 transition-colors w-full"
+            className="inline-flex flex-col items-center gap-0.5 rounded-2xl border-2 border-peach/60 bg-peach/25 shadow-sm px-5 py-3 text-charcoal hover:bg-peach/35 transition-colors w-full"
           >
             <span className="text-sm font-accent font-semibold">Skip for now</span>
             <span className="text-xs text-charcoal/70">I want to explore freely</span>
