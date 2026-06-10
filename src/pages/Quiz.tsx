@@ -217,10 +217,10 @@ const Quiz = () => {
   }) => (
     <button
       onClick={onClick}
-      className={`w-full rounded-2xl border px-5 py-4 text-left transition-colors text-sm font-medium ${
+      className={`w-full rounded-2xl border shadow-sm px-5 py-4 text-left transition-colors text-sm font-medium ${
         selected
-          ? "border-lavender bg-lavender/40 text-charcoal"
-          : "border-sage/50 bg-card text-charcoal hover:bg-sage/25"
+          ? "border-stone-300 border-l-4 border-l-sage bg-lavender/50 text-charcoal"
+          : "border-stone-300 bg-card text-charcoal hover:bg-sage/25"
       }`}
     >
       {label}
