@@ -37,8 +37,8 @@ const CaregiverJourney = () => {
               to={`/caregiver/${stage.id}`}
               className={`group relative w-60 shrink-0 rounded-2xl border px-4 py-4 transition-colors ${
                 seen
-                  ? "border-sage/50 bg-sage/25"
-                  : "border-peach/30 bg-peach/15 hover:bg-peach/25"
+                  ? "border-sage/50 bg-sage/25 shadow-sm"
+                  : "border-peach/50 bg-peach/25 shadow-sm hover:bg-peach/25"
               }`}
             >
               <div className="flex items-center justify-between">

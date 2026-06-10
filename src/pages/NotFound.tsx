@@ -12,7 +12,7 @@ const NotFound = () => {
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden px-5">
       <SoftBackdrop />
-      <div className="text-center space-y-3 rounded-3xl border border-sage/30 bg-card/80 backdrop-blur-sm px-8 py-10 max-w-sm w-full">
+      <div className="text-center space-y-3 rounded-3xl border border-sage/50 bg-card/80 backdrop-blur-sm px-8 py-10 max-w-sm w-full">
         <p className="font-display text-6xl font-semibold text-charcoal">404</p>
         <p className="text-base text-charcoal/70">This page wandered off.</p>
         <a

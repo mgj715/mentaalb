@@ -36,7 +36,7 @@ const Activities = () => {
           </div>
           <div className="space-y-2">
             {MOVEMENT.map((m) => (
-              <article key={m.id} className="rounded-2xl border border-sage/30 bg-sage/15 px-4 py-3.5">
+              <article key={m.id} className="rounded-2xl border border-sage/50 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{m.title}</p>
                   <span className="font-accent text-[11px] uppercase tracking-wide text-charcoal/60 shrink-0">{m.duration}</span>
@@ -62,7 +62,7 @@ const Activities = () => {
           </div>
           <div className="space-y-2">
             {CREATIVE.map((c) => (
-              <article key={c.id} className="rounded-2xl border border-lavender/30 bg-lavender/15 px-4 py-3.5">
+              <article key={c.id} className="rounded-2xl border border-lavender/50 bg-lavender/20 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{c.title}</p>
                   <span className="font-accent text-[11px] uppercase tracking-wide text-charcoal/60 shrink-0">{c.duration}</span>
@@ -88,7 +88,7 @@ const Activities = () => {
           </div>
           <div className="space-y-2">
             {CONNECTION.map((cn) => (
-              <article key={cn.id} className="rounded-2xl border border-peach/30 bg-peach/15 px-4 py-3.5">
+              <article key={cn.id} className="rounded-2xl border border-peach/50 bg-peach/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{cn.title}</p>
                   <span className="font-accent text-[11px] uppercase tracking-wide text-charcoal/60 shrink-0">{cn.duration}</span>

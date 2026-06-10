@@ -83,7 +83,7 @@ const Auth = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-3xl border border-sage/30 bg-card/80 backdrop-blur-sm px-5 py-5"
+          className="space-y-4 rounded-3xl border border-sage/50 bg-card/80 backdrop-blur-sm px-5 py-5"
         >
           <div className="space-y-1.5">
             <Label htmlFor="email" className="font-accent text-charcoal">Email</Label>

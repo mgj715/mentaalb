@@ -22,14 +22,14 @@ import {
 } from "@/lib/exploring-data";
 
 const TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
-  Story: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: BookOpen },
-  Article: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: FileText },
-  Video: { tone: "border-lavender/30 bg-lavender/15", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
-  Exercise: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: Wind },
-  Activity: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Sparkles },
-  Audio: { tone: "border-lavender/30 bg-lavender/15", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
-  Forum: { tone: "border-sage/30 bg-sage/15", chipTone: "bg-sage/60 text-charcoal", Icon: MessageCircle },
-  Support: { tone: "border-peach/30 bg-peach/15", chipTone: "bg-peach/60 text-charcoal", Icon: Stethoscope },
+  Story: { tone: "border-peach/50 bg-peach/25 shadow-sm", chipTone: "bg-peach/60 text-charcoal", Icon: BookOpen },
+  Article: { tone: "border-sage/50 bg-sage/25 shadow-sm", chipTone: "bg-sage/60 text-charcoal", Icon: FileText },
+  Video: { tone: "border-lavender/50 bg-lavender/20 shadow-sm", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
+  Exercise: { tone: "border-sage/50 bg-sage/25 shadow-sm", chipTone: "bg-sage/60 text-charcoal", Icon: Wind },
+  Activity: { tone: "border-peach/50 bg-peach/25 shadow-sm", chipTone: "bg-peach/60 text-charcoal", Icon: Sparkles },
+  Audio: { tone: "border-lavender/50 bg-lavender/20 shadow-sm", chipTone: "bg-lavender/60 text-charcoal", Icon: Play },
+  Forum: { tone: "border-sage/50 bg-sage/25 shadow-sm", chipTone: "bg-sage/60 text-charcoal", Icon: MessageCircle },
+  Support: { tone: "border-peach/50 bg-peach/25 shadow-sm", chipTone: "bg-peach/60 text-charcoal", Icon: Stethoscope },
 };
 
 const Card = ({ item }: { item: FeedItem }) => {
@@ -149,7 +149,7 @@ const Exploring = () => {
         {!quiz && (
           <button
             onClick={() => navigate("/quiz")}
-            className="w-full text-left rounded-2xl border border-lavender/40 bg-lavender/15 px-4 py-3 hover:bg-lavender/25 transition-colors"
+            className="w-full text-left rounded-2xl border border-lavender/40 bg-lavender/20 px-4 py-3 hover:bg-lavender/25 transition-colors"
           >
             <p className="font-display text-sm text-charcoal">
               Want a more personal experience?{" "}

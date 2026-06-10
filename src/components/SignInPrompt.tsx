@@ -20,7 +20,7 @@ const SignInPrompt = ({ action, className, redirectTo }: Props) => {
 
   return (
     <div
-      className={`rounded-2xl border border-lavender/30 bg-lavender/15 px-4 py-3.5 space-y-3 ${
+      className={`rounded-2xl border border-lavender/50 bg-lavender/20 shadow-sm px-4 py-3.5 space-y-3 ${
         className ?? ""
       }`}
     >

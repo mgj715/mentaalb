@@ -13,9 +13,9 @@ const iconMap = {
 
 // Soft alternating backgrounds keep the page feeling like a gentle wave.
 const TONES = [
-  "bg-sage/15 border-sage/30",
-  "bg-lavender/15 border-lavender/30",
-  "bg-peach/15 border-peach/30",
+  "bg-sage/25 border-sage/50",
+  "bg-lavender/20 border-lavender/50",
+  "bg-peach/25 border-peach/50",
 ] as const;
 
 const SectionBlock = ({ section }: { section: Section }) => {
