@@ -7,6 +7,7 @@ import SoftBackdrop from "@/components/SoftBackdrop";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import CaregiverJourney from "@/components/CaregiverJourney";
+import PatientJourney from "@/components/PatientJourney";
 import { loadQuiz, clearQuiz } from "@/lib/quiz-storage";
 import {
   buildPersonalPicks,
@@ -99,7 +100,11 @@ const YourSpace = () => {
           </div>
         </section>
 
-        {quiz?.isCaregiver && <CaregiverJourney />}
+        {quiz?.isCaregiver ? (
+          <CaregiverJourney />
+        ) : quiz?.situation === "myself" ? (
+          <PatientJourney />
+        ) : null}
 
         <div className="pt-2">
           <div className="h-px bg-stone/50" />
