@@ -512,7 +512,7 @@ const Quiz = () => {
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
-            className="flex-1 rounded-full"
+            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-primary-foreground disabled:bg-stone disabled:text-charcoal/50 disabled:opacity-100"
           >
             {(step === totalSteps) ? "Finish" : "Continue"}
             {step < totalSteps && <ArrowRight size={16} className="ml-2" />}
