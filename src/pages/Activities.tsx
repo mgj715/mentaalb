@@ -42,7 +42,7 @@ const Activities = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Gentle movement</h2>
           </div>
           <div className="space-y-2">
-            {MOVEMENT.map((m) => (
+            {movement.map((m) => (
               <article key={m.id} className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{m.title}</p>
@@ -68,7 +68,7 @@ const Activities = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Creative outlets</h2>
           </div>
           <div className="space-y-2">
-            {CREATIVE.map((c) => (
+            {creative.map((c) => (
               <article key={c.id} className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{c.title}</p>
@@ -94,7 +94,7 @@ const Activities = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Connection prompts</h2>
           </div>
           <div className="space-y-2">
-            {CONNECTION.map((cn) => (
+            {connection.map((cn) => (
               <article key={cn.id} className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{cn.title}</p>
