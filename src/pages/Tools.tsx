@@ -1,12 +1,19 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Wind, Sparkles, Headphones, Play, ChevronLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { AUDIO, BREATHING, GROUNDING } from "@/data/tools";
+import { loadQuiz } from "@/lib/quiz-storage";
+import { isBlockedByQuiz } from "@/lib/exploring-data";
 
 const Tools = () => {
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
+  const breathing = useMemo(() => BREATHING.filter((b) => !isBlockedByQuiz(b.title, b.description, quiz)), [quiz]);
+  const grounding = useMemo(() => GROUNDING.filter((g) => !isBlockedByQuiz(g.title, `${g.description} ${g.category}`, quiz)), [quiz]);
+  const audio = useMemo(() => AUDIO.filter((a) => !isBlockedByQuiz(a.title, a.description, quiz)), [quiz]);
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
