@@ -299,6 +299,12 @@ const Quiz = () => {
                   onClick={() => toggleSensitiveTopic(topic)}
                 />
               ))}
+              <Textarea
+                value={answers.customSensitiveText}
+                onChange={(e) => setAnswers({ ...answers, customSensitiveText: e.target.value })}
+                placeholder="Anything else you'd rather not see? Type it here."
+                className="bg-card border-border min-h-[72px]"
+              />
             </div>
           </div>
         );
