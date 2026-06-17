@@ -582,11 +582,14 @@ export const PATIENT_STAGES: PatientStage[] = [
   },
 ];
 
-export const patientStageContent = (stageId: PatientStage["id"]): FeedItem[] => {
+export const patientStageContent = (
+  stageId: PatientStage["id"],
+  q: StoredQuiz | null = null,
+): FeedItem[] => {
   const stage = PATIENT_STAGES.find((s) => s.id === stageId);
   if (!stage) return [];
-  const all = [...READ_FEED, ...DO_FEED, ...TALK_FEED];
-  const matched = all.filter(stage.match);
+  const all = filterSensitiveFeed([...READ_FEED, ...DO_FEED, ...TALK_FEED], q);
+  const matched = rankByTime(all.filter(stage.match), q?.timeEnergy);
   const seen = new Set<string>();
   const out: FeedItem[] = [];
   for (const item of matched) {
