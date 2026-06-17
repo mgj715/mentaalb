@@ -360,10 +360,15 @@ const Quiz = () => {
           <div className="space-y-4">
             <div>
               <h2 className="font-display text-2xl font-semibold text-charcoal">Time & Energy</h2>
-              <p className="text-sm text-muted-foreground mt-1">How much time do you have today?</p>
+              <p className="text-sm text-muted-foreground mt-1">How much time do you want to spend here right now?</p>
             </div>
             <div className="space-y-2">
-              {["1 minute", "5 minutes", "10 minutes", "More time"].map((option) => (
+              {[
+                "A minute or two — something quick",
+                "Around 5 minutes — one short thing",
+                "Around 10 minutes — a few things",
+                "Longer — I want to take my time",
+              ].map((option) => (
                 <OptionButton
                   key={option}
                   label={option}
