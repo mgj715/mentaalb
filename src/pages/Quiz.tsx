@@ -70,6 +70,7 @@ type QuizState = {
   hasDiagnosis: string;
   diagnosis: string;
   sensitiveTopics: string[];
+  customSensitiveText: string;
   priorities: string[];
   currentState: string;
   timeEnergy: string;
@@ -104,6 +105,7 @@ const Quiz = () => {
       hasDiagnosis: stored?.hasDiagnosis ?? "",
       diagnosis: stored?.diagnosis ?? "",
       sensitiveTopics: stored?.sensitiveTopics ?? [],
+      customSensitiveText: (stored?.customSensitiveTopics ?? []).join(", "),
       priorities: stored?.priorities?.length ? stored.priorities : [...initialPriorities],
       currentState: stored?.currentState ?? "",
       timeEnergy: stored?.timeEnergy ?? "",
@@ -111,6 +113,7 @@ const Quiz = () => {
       caregiverNeed: stored?.caregiverNeed ?? "",
     };
   });
+  
   
 
   const sensors = useSensors(
