@@ -17,6 +17,7 @@ const loadVisited = (): string[] => {
 
 const CaregiverJourney = () => {
   const [visited, setVisited] = useState<string[]>([]);
+  const quiz = useMemo(() => loadQuiz(), []);
 
   useEffect(() => {
     setVisited(loadVisited());
@@ -30,7 +31,7 @@ const CaregiverJourney = () => {
       </div>
       <div className="flex gap-3 overflow-x-auto -mx-5 px-5 pb-2 scrollbar-hide">
         {CAREGIVER_STAGES.map((stage, idx) => {
-          const count = stageContent(stage.id).length;
+          const count = stageContent(stage.id, quiz).length;
           const seen = visited.includes(stage.id);
           return (
             <Link
