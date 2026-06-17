@@ -127,6 +127,27 @@ const YourSpace = () => {
           <PatientJourney />
         ) : null}
 
+        <section className="space-y-3">
+          <h2 className="font-display text-lg font-semibold text-charcoal">Someone to talk to</h2>
+          <Link
+            to="/small-circle"
+            className="block rounded-2xl border border-peach/40 bg-peach/25 shadow-sm px-4 py-3.5 hover:bg-peach/30 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-accent bg-peach/60 text-charcoal">
+                <Users size={10} />
+                Small Circle
+              </span>
+            </div>
+            <p className="font-display text-base font-semibold text-charcoal leading-snug mt-1.5">
+              Join a small group
+            </p>
+            <p className="text-xs text-charcoal/70 mt-2 leading-relaxed">
+              Six people, one shared experience. A gentler way to be heard.
+            </p>
+          </Link>
+        </section>
+
         <div className="pt-2">
           <div className="h-px bg-stone/50" />
           <p className="pt-6 text-center font-accent text-xs text-charcoal/55">
