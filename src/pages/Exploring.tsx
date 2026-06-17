@@ -86,12 +86,14 @@ const Row = ({
   seeAllHref,
   emptyHint,
   navigate,
+  prepend,
 }: {
   title: string;
   items: FeedItem[];
   seeAllHref: string;
   emptyHint: string;
   navigate: ReturnType<typeof useNavigate>;
+  prepend?: ReactNode;
 }) => (
   <section className="-mx-5">
     <div className="px-5 mb-2 flex items-baseline justify-between">
@@ -103,13 +105,14 @@ const Row = ({
         see all →
       </button>
     </div>
-    {items.length === 0 ? (
+    {items.length === 0 && !prepend ? (
       <div className="mx-5 rounded-2xl border border-stone/40 bg-warm-white/60 px-4 py-5 text-center">
         <p className="font-accent text-xs text-charcoal/60">{emptyHint}</p>
       </div>
     ) : (
       <div className="px-5 overflow-x-auto scrollbar-hide">
         <div className="flex gap-3 w-max pb-2">
+          {prepend}
           {items.map((item) => (
             <Card key={`${title}-${item.id}`} item={item} />
           ))}
@@ -117,6 +120,27 @@ const Row = ({
       </div>
     )}
   </section>
+);
+
+const SmallCircleScrollCard = () => (
+  <Link
+    to="/small-circle"
+    className="w-60 shrink-0 rounded-2xl border border-peach/40 bg-peach/25 shadow-sm px-4 py-3.5 hover:bg-peach/30 transition-colors block"
+  >
+    <div className="flex items-center gap-2">
+      <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-accent bg-peach/60 text-charcoal">
+        <Users size={10} />
+        Small Circle
+      </span>
+    </div>
+    <p className="font-display text-base font-semibold text-charcoal leading-snug mt-1.5 line-clamp-2">
+      Join a small group
+    </p>
+    <p className="font-accent text-[11px] text-charcoal/60 mt-0.5 line-clamp-1">A few others who get it</p>
+    <p className="text-xs text-charcoal/70 mt-2 leading-relaxed line-clamp-3">
+      Six people, one shared experience. A gentler way to be heard.
+    </p>
+  </Link>
 );
 
 const Exploring = () => {
