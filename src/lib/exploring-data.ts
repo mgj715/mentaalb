@@ -215,6 +215,101 @@ export const filterByThemeAndQuery = <T extends FeedItem>(
 
 // === Personalization ===
 
+// Predefined sensitive-topic keyword patterns. Match against title + body.
+// Crisis-line content is never filtered (handled separately in isBlockedByQuiz).
+const SENSITIVE_PATTERNS: Record<string, RegExp> = {
+  "Self-harm": /\b(self[\s-]?harm|harm|hurt myself)\b/i,
+  "Suicide": /\b(suicide|suicidal|ending life)\b/i,
+  "Trauma": /\b(trauma|ptsd|abuse)\b/i,
+  "Substance use": /\b(addiction|alcohol|drugs|substance)\b/i,
+  "Eating-related issues": /\b(eating disorder|body|food)\b/i,
+};
+
+const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// True if the given text should be hidden based on the user's sensitive-topic
+// preferences. Crisis content is always allowed through.
+export const isBlockedByQuiz = (
+  title: string,
+  body: string,
+  q: StoredQuiz | null,
+): boolean => {
+  if (!q) return false;
+  if (/crisis/i.test(title)) return false;
+  const topics = (q.sensitiveTopics ?? []).filter(
+    (t) => t !== "None of the above",
+  );
+  const text = `${title} ${body}`;
+  for (const t of topics) {
+    const pat = SENSITIVE_PATTERNS[t];
+    if (pat && pat.test(text)) return true;
+  }
+  for (const raw of q.customSensitiveTopics ?? []) {
+    const w = raw.trim();
+    if (!w) continue;
+    if (new RegExp(escapeRegex(w), "i").test(text)) return true;
+  }
+  return false;
+};
+
+// Hide feed items the user has opted out of.
+export const filterSensitiveFeed = <T extends FeedItem>(
+  items: T[],
+  q: StoredQuiz | null,
+): T[] => items.filter((i) => !isBlockedByQuiz(i.title, `${i.blurb} ${i.meta}`, q));
+
+const parseDurationMins = (i: FeedItem): number => {
+  const s = i.duration ?? i.meta ?? "";
+  const m = s.match(/(\d+)/);
+  return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
+};
+
+// Reorder feed items so ones matching the user's available time appear first.
+// "Longer" or no value → no reorder.
+export const rankByTime = <T extends FeedItem>(
+  items: T[],
+  timeEnergy?: string,
+): T[] => {
+  if (!timeEnergy) return items;
+  let threshold: number | null = null;
+  if (/^(A minute|Around 5)/i.test(timeEnergy)) threshold = 5;
+  else if (/^Around 10/i.test(timeEnergy)) threshold = 10;
+  else if (/^(1 minute|5 minutes)$/i.test(timeEnergy)) threshold = 5; // legacy
+  else if (/^10 minutes$/i.test(timeEnergy)) threshold = 10; // legacy
+  if (threshold === null) return items;
+  const t = threshold;
+  const fast: T[] = [];
+  const rest: T[] = [];
+  for (const it of items) (parseDurationMins(it) <= t ? fast : rest).push(it);
+  return [...fast, ...rest];
+};
+
+// Section slots on YourSpace / Exploring.
+export type SectionSlot = "read" | "do" | "talk";
+const PRIORITY_TO_SLOT: Record<string, SectionSlot> = {
+  "Understanding what's going on": "read",
+  "Resources and information": "read",
+  "Practical tools and exercises": "do",
+  "Activities to feel better": "do",
+  "Peer stories and experiences": "talk",
+};
+
+export const sectionOrder = (q: StoredQuiz | null): SectionSlot[] => {
+  const order: SectionSlot[] = [];
+  const seen = new Set<SectionSlot>();
+  for (const p of q?.priorities ?? []) {
+    const slot = PRIORITY_TO_SLOT[p];
+    if (slot && !seen.has(slot)) {
+      order.push(slot);
+      seen.add(slot);
+    }
+  }
+  for (const s of ["read", "do", "talk"] as SectionSlot[]) {
+    if (!seen.has(s)) order.push(s);
+  }
+  return order;
+};
+
 export const themeFromQuiz = (q: StoredQuiz | null): Theme | null => {
   if (!q) return null;
   if (q.isCaregiver) return "Helping someone I love";
@@ -230,7 +325,7 @@ export const themeFromQuiz = (q: StoredQuiz | null): Theme | null => {
     default:
       break;
   }
-  if (q.timeEnergy === "1 minute" || q.timeEnergy === "5 minutes")
+  if (q.timeEnergy && /^(A minute|Around 5|1 minute|5 minutes)/i.test(q.timeEnergy))
     return "I only have a few minutes";
   return null;
 };
