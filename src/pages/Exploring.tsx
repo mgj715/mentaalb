@@ -332,6 +332,7 @@ const Exploring = () => {
               seeAllHref={cfg.href}
               emptyHint={cfg.empty}
               navigate={navigate}
+              prepend={slot === "talk" ? <SmallCircleScrollCard /> : undefined}
             />
           );
         })}
