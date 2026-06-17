@@ -146,7 +146,7 @@ const Quiz = () => {
         if (!answers.situation) return false;
         if (answers.situation === "myself" && !answers.hasDiagnosis) return false;
         return true;
-      case 2: return answers.sensitiveTopics.length > 0;
+      case 2: return answers.sensitiveTopics.length > 0 || answers.customSensitiveText.trim().length > 0;
       case 3: return true;
       case 4: return !!answers.currentState;
       case 5: return !!answers.timeEnergy;
@@ -156,9 +156,15 @@ const Quiz = () => {
     }
   };
 
+  const customSensitiveTopics = answers.customSensitiveText
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   const storedQuiz: StoredQuiz = {
     situation: answers.situation as "myself" | "someone" | "",
     sensitiveTopics: answers.sensitiveTopics,
+    customSensitiveTopics,
     priorities: answers.priorities,
     isCaregiver: isCareAbout,
     currentState: answers.currentState,
