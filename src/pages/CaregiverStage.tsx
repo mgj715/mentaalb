@@ -7,6 +7,7 @@ import SoftBackdrop from "@/components/SoftBackdrop";
 
 import { markStageVisited } from "@/components/CaregiverJourney";
 import { CAREGIVER_STAGES, stageContent, type FeedItem, type ItemType } from "@/lib/exploring-data";
+import { loadQuiz } from "@/lib/quiz-storage";
 
 const TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
   Story: { tone: "border-lavender/40 bg-lavender/25 shadow-sm", chipTone: "bg-lavender/60 text-charcoal", Icon: BookOpen },
