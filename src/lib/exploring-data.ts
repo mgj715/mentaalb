@@ -380,41 +380,51 @@ const editorialNote = (type: ItemType, q: StoredQuiz): string => {
 export const personalizedEditorial = (q: StoredQuiz | null): EditorialPick[] => {
   if (!q) return DEFAULT_EDITORIAL;
   const theme = themeFromQuiz(q);
-  const themed = (feed: FeedItem[]) => (theme ? feed.filter((i) => i.themes.includes(theme)) : feed);
-  const read = rankByStyle(themed(READ_FEED), q.supportStyle);
-  const doF = rankByStyle(themed(DO_FEED), q.supportStyle);
-  const talk = rankByStyle(themed(TALK_FEED), q.supportStyle);
+  const themed = (feed: FeedItem[]) => {
+    const safe = filterSensitiveFeed(feed, q);
+    return theme ? safe.filter((i) => i.themes.includes(theme)) : safe;
+  };
+  const order = sectionOrder(q);
+  const feedFor = (s: SectionSlot) =>
+    s === "read" ? READ_FEED : s === "do" ? DO_FEED : TALK_FEED;
   const picks: EditorialPick[] = [];
   const pushFrom = (feed: FeedItem[]) => {
-    const item = feed[0];
+    const ranked = rankByTime(rankByStyle(feed, q.supportStyle), q.timeEnergy);
+    const item = ranked[0];
     if (!item) return;
     if (picks.find((p) => p.id === item.id)) return;
     picks.push({ ...item, note: editorialNote(item.type, q) });
   };
-  // Order picks roughly by support style preference where possible
-  pushFrom(read);
-  pushFrom(doF);
-  pushFrom(talk);
+  for (const slot of order) pushFrom(themed(feedFor(slot)));
   // Ensure at least 3-4 picks
   if (picks.length < 4) {
-    const extra = rankByStyle(themed([...READ_FEED, ...DO_FEED]), q.supportStyle).find(
-      (i) => !picks.find((p) => p.id === i.id),
+    const pool = rankByTime(
+      rankByStyle(themed([...READ_FEED, ...DO_FEED]), q.supportStyle),
+      q.timeEnergy,
     );
+    const extra = pool.find((i) => !picks.find((p) => p.id === i.id));
     if (extra) picks.push({ ...extra, note: editorialNote(extra.type, q) });
   }
   return picks.length ? picks : DEFAULT_EDITORIAL;
 };
 
-// Pick 3 personalized items (one from each feed) with optional offset for "refresh".
+// Pick personalized items, one from each slot in the user's priority order.
 export const buildPersonalPicks = (q: StoredQuiz | null, offset = 0): FeedItem[] => {
   const theme = themeFromQuiz(q);
+  const feedFor = (s: SectionSlot) =>
+    s === "read" ? READ_FEED : s === "do" ? DO_FEED : TALK_FEED;
   const pickFrom = (feed: FeedItem[]): FeedItem | undefined => {
-    const themed = theme ? feed.filter((i) => i.themes.includes(theme)) : feed;
-    const ranked = rankByStyle(themed.length ? themed : feed, q?.supportStyle);
+    const safe = filterSensitiveFeed(feed, q);
+    const themed = theme ? safe.filter((i) => i.themes.includes(theme)) : safe;
+    const ranked = rankByTime(
+      rankByStyle(themed.length ? themed : safe, q?.supportStyle),
+      q?.timeEnergy,
+    );
     if (!ranked.length) return undefined;
     return ranked[offset % ranked.length];
   };
-  return [pickFrom(READ_FEED), pickFrom(DO_FEED), pickFrom(TALK_FEED)].filter(Boolean) as FeedItem[];
+  const order = sectionOrder(q);
+  return order.map((s) => pickFrom(feedFor(s))).filter(Boolean) as FeedItem[];
 };
 
 // A short, situation-aware header for the personal home page.
