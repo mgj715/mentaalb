@@ -42,7 +42,7 @@ const Tools = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Breathing exercises</h2>
           </div>
           <div className="space-y-2">
-            {BREATHING.map((b) => (
+            {breathing.map((b) => (
               <article
                 key={b.id}
                 className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5"
@@ -75,7 +75,7 @@ const Tools = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Grounding & coping</h2>
           </div>
           <div className="space-y-2">
-            {GROUNDING.map((g) => (
+            {grounding.map((g) => (
               <article
                 key={g.id}
                 className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5"
@@ -101,7 +101,7 @@ const Tools = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Guided audio</h2>
           </div>
           <div className="space-y-3">
-            {AUDIO.map((a) => (
+            {audio.map((a) => (
               <article
                 key={a.id}
                 className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm overflow-hidden"
