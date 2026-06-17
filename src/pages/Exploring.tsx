@@ -16,9 +16,12 @@ import {
   type EditorialPick,
   interleave,
   filterByThemeAndQuery,
+  filterSensitiveFeed,
   personalizedEditorial,
   themeFromQuiz,
   rankByStyle,
+  rankByTime,
+  sectionOrder,
 } from "@/lib/exploring-data";
 
 const TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
