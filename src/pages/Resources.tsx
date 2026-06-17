@@ -42,7 +42,7 @@ const Resources = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Stories</h2>
           </div>
           <div className="space-y-2">
-            {STORIES.map((s) => (
+            {stories.map((s) => (
               <article
                 key={s.id}
                 className="rounded-2xl border border-lavender/40 bg-lavender/25 shadow-sm px-4 py-3.5"
@@ -68,7 +68,7 @@ const Resources = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Articles</h2>
           </div>
           <div className="space-y-2">
-            {ARTICLES.map((a) => (
+            {articles.map((a) => (
               <article
                 key={a.id}
                 className="rounded-2xl border border-lavender/40 bg-lavender/25 shadow-sm px-4 py-3.5"
@@ -94,7 +94,7 @@ const Resources = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Videos</h2>
           </div>
           <div className="space-y-3">
-            {VIDEOS.map((v) => (
+            {videos.map((v) => (
               <article
                 key={v.id}
                 className="rounded-2xl border border-lavender/40 bg-lavender/25 shadow-sm overflow-hidden"
