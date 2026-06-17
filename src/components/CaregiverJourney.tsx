@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { CAREGIVER_STAGES, stageContent } from "@/lib/exploring-data";
+import { loadQuiz } from "@/lib/quiz-storage";
 
 const VISITED_KEY = "mentaal.caregiver.visited.v1";
 
