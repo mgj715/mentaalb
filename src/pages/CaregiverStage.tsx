@@ -124,18 +124,20 @@ const CaregiverStage = () => {
         </div>
 
         {meta.id === "self-care" && (
-          <div className="space-y-2">
-            <h2 className="font-display text-lg font-semibold text-charcoal">Small Circle</h2>
-            <p className="text-xs text-charcoal/70">
-              A small support group for people caring for someone they love.
+          <Link
+            to="/small-circle"
+            className="block rounded-2xl border-2 border-peach/50 bg-peach/30 shadow-sm px-5 py-5 hover:bg-peach/40 transition-colors"
+          >
+            <p className="font-display text-lg font-semibold text-charcoal leading-snug">
+              Ready to not do this alone?
             </p>
-            <Link
-              to="/small-circle"
-              className="inline-flex items-center gap-1 text-sm font-accent text-charcoal hover:underline"
-            >
-              Visit Small Circle →
-            </Link>
-          </div>
+            <p className="text-sm text-charcoal/75 mt-1.5 leading-relaxed">
+              Small Circle is a gentle space with a few others who understand.
+            </p>
+            <span className="inline-flex items-center gap-1 mt-3 font-accent text-sm text-charcoal">
+              See what's open →
+            </span>
+          </Link>
         )}
       </main>
       <Footer />
