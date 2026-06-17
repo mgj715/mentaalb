@@ -524,12 +524,14 @@ export const CAREGIVER_STAGES: CaregiverStage[] = [
   },
 ];
 
-export const stageContent = (stageId: CaregiverStage["id"]): FeedItem[] => {
+export const stageContent = (
+  stageId: CaregiverStage["id"],
+  q: StoredQuiz | null = null,
+): FeedItem[] => {
   const stage = CAREGIVER_STAGES.find((s) => s.id === stageId);
   if (!stage) return [];
-  const all = [...READ_FEED, ...DO_FEED, ...TALK_FEED];
-  const matched = all.filter(stage.match);
-  // dedupe by id, cap at 8
+  const all = filterSensitiveFeed([...READ_FEED, ...DO_FEED, ...TALK_FEED], q);
+  const matched = rankByTime(all.filter(stage.match), q?.timeEnergy);
   const seen = new Set<string>();
   const out: FeedItem[] = [];
   for (const item of matched) {
