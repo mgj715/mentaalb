@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Search, Play, BookOpen, FileText, Sparkles, Wind, MessageCircle, Stethoscope } from "lucide-react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ChevronLeft, Search, Play, BookOpen, FileText, Sparkles, Wind, MessageCircle, Stethoscope, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
