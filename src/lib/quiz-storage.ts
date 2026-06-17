@@ -3,6 +3,7 @@ import { PRIORITY_TO_SECTION, SectionId, SensitiveTopic, FIXED_ORDER } from "@/d
 export type StoredQuiz = {
   situation: "myself" | "someone" | "";
   sensitiveTopics: string[];
+  customSensitiveTopics?: string[];
   priorities: string[]; // ordered list of priority labels
   isCaregiver: boolean;
   currentState?: string;
