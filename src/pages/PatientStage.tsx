@@ -122,6 +122,23 @@ const PatientStage = () => {
             items.map((it) => <Card key={it.id} item={it} />)
           )}
         </div>
+
+        {meta.id === "next-step" && (
+          <Link
+            to="/small-circle"
+            className="block rounded-2xl border-2 border-peach/50 bg-peach/30 shadow-sm px-5 py-5 hover:bg-peach/40 transition-colors"
+          >
+            <p className="font-display text-lg font-semibold text-charcoal leading-snug">
+              Ready to not do this alone?
+            </p>
+            <p className="text-sm text-charcoal/75 mt-1.5 leading-relaxed">
+              Small Circle is a gentle space with a few others who understand.
+            </p>
+            <span className="inline-flex items-center gap-1 mt-3 font-accent text-sm text-charcoal">
+              See what's open →
+            </span>
+          </Link>
+        )}
       </main>
       <Footer />
     </div>
