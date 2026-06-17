@@ -1,12 +1,19 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Footprints, Palette, Heart, ChevronLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { MOVEMENT, CREATIVE, CONNECTION } from "@/data/activities";
+import { loadQuiz } from "@/lib/quiz-storage";
+import { isBlockedByQuiz } from "@/lib/exploring-data";
 
 const Activities = () => {
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
+  const movement = useMemo(() => MOVEMENT.filter((m) => !isBlockedByQuiz(m.title, m.description, quiz)), [quiz]);
+  const creative = useMemo(() => CREATIVE.filter((c) => !isBlockedByQuiz(c.title, c.description, quiz)), [quiz]);
+  const connection = useMemo(() => CONNECTION.filter((c) => !isBlockedByQuiz(c.title, c.description, quiz)), [quiz]);
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
