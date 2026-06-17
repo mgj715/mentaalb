@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { PATIENT_STAGES, patientStageContent } from "@/lib/exploring-data";
+import { loadQuiz } from "@/lib/quiz-storage";
 
 const VISITED_KEY = "mentaal.patient.visited.v1";
 
