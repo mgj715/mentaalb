@@ -49,7 +49,7 @@ const Forums = () => {
         </div>
 
         <div className="space-y-8">
-          {FORUM_CATEGORY_GROUPS.map((group) => (
+          {groups.map((group) => (
             <section key={group.id} className="space-y-3">
               <div className="space-y-1">
                 <h2 className="font-display text-xl font-semibold text-charcoal">
