@@ -298,27 +298,19 @@ const Exploring = () => {
           </section>
         )}
 
-        <Row
-          title="Something to read or watch"
-          items={readItems}
-          seeAllHref="/resources"
-          emptyHint="Nothing matches this theme yet — try another."
-          navigate={navigate}
-        />
-        <Row
-          title="Something to do"
-          items={doItems}
-          seeAllHref="/tools"
-          emptyHint="No practices match yet — try another theme."
-          navigate={navigate}
-        />
-        <Row
-          title="Someone to talk to"
-          items={talkItems}
-          seeAllHref="/forums"
-          emptyHint="No spaces match this theme yet — try another."
-          navigate={navigate}
-        />
+        {slotOrder.map((slot) => {
+          const cfg = slotConfig[slot];
+          return (
+            <Row
+              key={slot}
+              title={cfg.title}
+              items={cfg.items}
+              seeAllHref={cfg.href}
+              emptyHint={cfg.empty}
+              navigate={navigate}
+            />
+          );
+        })}
       </main>
       <Footer />
     </div>
