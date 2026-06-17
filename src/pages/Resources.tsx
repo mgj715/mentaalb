@@ -10,6 +10,10 @@ import { isBlockedByQuiz } from "@/lib/exploring-data";
 
 const Resources = () => {
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
+  const stories = useMemo(() => STORIES.filter((s) => !isBlockedByQuiz(s.title, s.excerpt, quiz)), [quiz]);
+  const articles = useMemo(() => ARTICLES.filter((a) => !isBlockedByQuiz(a.title, `${a.summary} ${a.category}`, quiz)), [quiz]);
+  const videos = useMemo(() => VIDEOS.filter((v) => !isBlockedByQuiz(v.title, v.description, quiz)), [quiz]);
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
