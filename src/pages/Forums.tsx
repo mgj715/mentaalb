@@ -1,14 +1,28 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { FORUM_CATEGORY_GROUPS } from "@/data/forumCategories";
+import { loadQuiz } from "@/lib/quiz-storage";
+import { isBlockedByQuiz } from "@/lib/exploring-data";
 
 // All forum cards share the peach tone (community content type).
 const FORUM_TONE = "bg-peach/25 border-peach/40 shadow-sm";
 
 const Forums = () => {
+  const quiz = useMemo(() => loadQuiz(), []);
+  const groups = useMemo(
+    () =>
+      FORUM_CATEGORY_GROUPS.map((g) => ({
+        ...g,
+        categories: g.categories.filter(
+          (c) => !isBlockedByQuiz(c.name, `${c.description} ${g.title}`, quiz),
+        ),
+      })).filter((g) => g.categories.length > 0),
+    [quiz],
+  );
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
