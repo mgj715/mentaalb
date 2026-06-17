@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { PATIENT_STAGES, patientStageContent } from "@/lib/exploring-data";
+import { loadQuiz } from "@/lib/quiz-storage";
 
 const VISITED_KEY = "mentaal.patient.visited.v1";
 
@@ -16,6 +17,7 @@ const loadVisited = (): string[] => {
 
 const PatientJourney = () => {
   const [visited, setVisited] = useState<string[]>([]);
+  const quiz = useMemo(() => loadQuiz(), []);
 
   useEffect(() => {
     setVisited(loadVisited());
@@ -29,7 +31,7 @@ const PatientJourney = () => {
       </div>
       <div className="flex gap-3 overflow-x-auto -mx-5 px-5 pb-2 scrollbar-hide">
         {PATIENT_STAGES.map((stage, idx) => {
-          const count = patientStageContent(stage.id).length;
+          const count = patientStageContent(stage.id, quiz).length;
           const seen = visited.includes(stage.id);
           return (
             <Link

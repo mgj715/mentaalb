@@ -1,12 +1,19 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Footprints, Palette, Heart, ChevronLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { MOVEMENT, CREATIVE, CONNECTION } from "@/data/activities";
+import { loadQuiz } from "@/lib/quiz-storage";
+import { isBlockedByQuiz } from "@/lib/exploring-data";
 
 const Activities = () => {
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
+  const movement = useMemo(() => MOVEMENT.filter((m) => !isBlockedByQuiz(m.title, m.description, quiz)), [quiz]);
+  const creative = useMemo(() => CREATIVE.filter((c) => !isBlockedByQuiz(c.title, c.description, quiz)), [quiz]);
+  const connection = useMemo(() => CONNECTION.filter((c) => !isBlockedByQuiz(c.title, c.description, quiz)), [quiz]);
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
@@ -35,7 +42,7 @@ const Activities = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Gentle movement</h2>
           </div>
           <div className="space-y-2">
-            {MOVEMENT.map((m) => (
+            {movement.map((m) => (
               <article key={m.id} className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{m.title}</p>
@@ -61,7 +68,7 @@ const Activities = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Creative outlets</h2>
           </div>
           <div className="space-y-2">
-            {CREATIVE.map((c) => (
+            {creative.map((c) => (
               <article key={c.id} className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{c.title}</p>
@@ -87,7 +94,7 @@ const Activities = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Connection prompts</h2>
           </div>
           <div className="space-y-2">
-            {CONNECTION.map((cn) => (
+            {connection.map((cn) => (
               <article key={cn.id} className="rounded-2xl border border-sage/40 bg-sage/25 shadow-sm px-4 py-3.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-base font-semibold text-charcoal leading-snug">{cn.title}</p>

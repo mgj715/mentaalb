@@ -1,12 +1,19 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Play, BookOpen, FileText, ChevronLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SoftBackdrop from "@/components/SoftBackdrop";
 import { ARTICLES, STORIES, VIDEOS } from "@/data/resources";
+import { loadQuiz } from "@/lib/quiz-storage";
+import { isBlockedByQuiz } from "@/lib/exploring-data";
 
 const Resources = () => {
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
+  const stories = useMemo(() => STORIES.filter((s) => !isBlockedByQuiz(s.title, s.excerpt, quiz)), [quiz]);
+  const articles = useMemo(() => ARTICLES.filter((a) => !isBlockedByQuiz(a.title, `${a.summary} ${a.category}`, quiz)), [quiz]);
+  const videos = useMemo(() => VIDEOS.filter((v) => !isBlockedByQuiz(v.title, v.description, quiz)), [quiz]);
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
       <SoftBackdrop />
@@ -35,7 +42,7 @@ const Resources = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Stories</h2>
           </div>
           <div className="space-y-2">
-            {STORIES.map((s) => (
+            {stories.map((s) => (
               <article
                 key={s.id}
                 className="rounded-2xl border border-lavender/40 bg-lavender/25 shadow-sm px-4 py-3.5"
@@ -61,7 +68,7 @@ const Resources = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Articles</h2>
           </div>
           <div className="space-y-2">
-            {ARTICLES.map((a) => (
+            {articles.map((a) => (
               <article
                 key={a.id}
                 className="rounded-2xl border border-lavender/40 bg-lavender/25 shadow-sm px-4 py-3.5"
@@ -87,7 +94,7 @@ const Resources = () => {
             <h2 className="font-display text-2xl font-semibold text-charcoal">Videos</h2>
           </div>
           <div className="space-y-3">
-            {VIDEOS.map((v) => (
+            {videos.map((v) => (
               <article
                 key={v.id}
                 className="rounded-2xl border border-lavender/40 bg-lavender/25 shadow-sm overflow-hidden"

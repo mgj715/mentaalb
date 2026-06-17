@@ -7,6 +7,7 @@ import SoftBackdrop from "@/components/SoftBackdrop";
 
 import { markPatientStageVisited } from "@/components/PatientJourney";
 import { PATIENT_STAGES, patientStageContent, type FeedItem, type ItemType } from "@/lib/exploring-data";
+import { loadQuiz } from "@/lib/quiz-storage";
 
 const TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
   Story: { tone: "border-lavender/40 bg-lavender/25 shadow-sm", chipTone: "bg-lavender/60 text-charcoal", Icon: BookOpen },
@@ -65,8 +66,9 @@ const Card = ({ item }: { item: FeedItem }) => {
 const PatientStage = () => {
   const { stage } = useParams<{ stage: string }>();
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
   const meta = useMemo(() => PATIENT_STAGES.find((s) => s.id === stage), [stage]);
-  const items = useMemo(() => (meta ? patientStageContent(meta.id) : []), [meta]);
+  const items = useMemo(() => (meta ? patientStageContent(meta.id, quiz) : []), [meta, quiz]);
 
   useEffect(() => {
     if (meta) markPatientStageVisited(meta.id);

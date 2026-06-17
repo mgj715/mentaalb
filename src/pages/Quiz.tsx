@@ -70,6 +70,7 @@ type QuizState = {
   hasDiagnosis: string;
   diagnosis: string;
   sensitiveTopics: string[];
+  customSensitiveText: string;
   priorities: string[];
   currentState: string;
   timeEnergy: string;
@@ -104,6 +105,7 @@ const Quiz = () => {
       hasDiagnosis: stored?.hasDiagnosis ?? "",
       diagnosis: stored?.diagnosis ?? "",
       sensitiveTopics: stored?.sensitiveTopics ?? [],
+      customSensitiveText: (stored?.customSensitiveTopics ?? []).join(", "),
       priorities: stored?.priorities?.length ? stored.priorities : [...initialPriorities],
       currentState: stored?.currentState ?? "",
       timeEnergy: stored?.timeEnergy ?? "",
@@ -111,6 +113,7 @@ const Quiz = () => {
       caregiverNeed: stored?.caregiverNeed ?? "",
     };
   });
+  
   
 
   const sensors = useSensors(
@@ -143,7 +146,7 @@ const Quiz = () => {
         if (!answers.situation) return false;
         if (answers.situation === "myself" && !answers.hasDiagnosis) return false;
         return true;
-      case 2: return answers.sensitiveTopics.length > 0;
+      case 2: return answers.sensitiveTopics.length > 0 || answers.customSensitiveText.trim().length > 0;
       case 3: return true;
       case 4: return !!answers.currentState;
       case 5: return !!answers.timeEnergy;
@@ -153,9 +156,15 @@ const Quiz = () => {
     }
   };
 
+  const customSensitiveTopics = answers.customSensitiveText
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   const storedQuiz: StoredQuiz = {
     situation: answers.situation as "myself" | "someone" | "",
     sensitiveTopics: answers.sensitiveTopics,
+    customSensitiveTopics,
     priorities: answers.priorities,
     isCaregiver: isCareAbout,
     currentState: answers.currentState,
@@ -290,6 +299,12 @@ const Quiz = () => {
                   onClick={() => toggleSensitiveTopic(topic)}
                 />
               ))}
+              <Textarea
+                value={answers.customSensitiveText}
+                onChange={(e) => setAnswers({ ...answers, customSensitiveText: e.target.value })}
+                placeholder="Anything else you'd rather not see? Type it here."
+                className="bg-card border-border min-h-[72px]"
+              />
             </div>
           </div>
         );
@@ -345,10 +360,15 @@ const Quiz = () => {
           <div className="space-y-4">
             <div>
               <h2 className="font-display text-2xl font-semibold text-charcoal">Time & Energy</h2>
-              <p className="text-sm text-muted-foreground mt-1">How much time do you have today?</p>
+              <p className="text-sm text-muted-foreground mt-1">How much time do you want to spend here right now?</p>
             </div>
             <div className="space-y-2">
-              {["1 minute", "5 minutes", "10 minutes", "More time"].map((option) => (
+              {[
+                "A minute or two — something quick",
+                "Around 5 minutes — one short thing",
+                "Around 10 minutes — a few things",
+                "Longer — I want to take my time",
+              ].map((option) => (
                 <OptionButton
                   key={option}
                   label={option}

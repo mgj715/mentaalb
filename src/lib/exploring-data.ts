@@ -215,6 +215,101 @@ export const filterByThemeAndQuery = <T extends FeedItem>(
 
 // === Personalization ===
 
+// Predefined sensitive-topic keyword patterns. Match against title + body.
+// Crisis-line content is never filtered (handled separately in isBlockedByQuiz).
+const SENSITIVE_PATTERNS: Record<string, RegExp> = {
+  "Self-harm": /\b(self[\s-]?harm|harm|hurt myself)\b/i,
+  "Suicide": /\b(suicide|suicidal|ending life)\b/i,
+  "Trauma": /\b(trauma|ptsd|abuse)\b/i,
+  "Substance use": /\b(addiction|alcohol|drugs|substance)\b/i,
+  "Eating-related issues": /\b(eating disorder|body|food)\b/i,
+};
+
+const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// True if the given text should be hidden based on the user's sensitive-topic
+// preferences. Crisis content is always allowed through.
+export const isBlockedByQuiz = (
+  title: string,
+  body: string,
+  q: StoredQuiz | null,
+): boolean => {
+  if (!q) return false;
+  if (/crisis/i.test(title)) return false;
+  const topics = (q.sensitiveTopics ?? []).filter(
+    (t) => t !== "None of the above",
+  );
+  const text = `${title} ${body}`;
+  for (const t of topics) {
+    const pat = SENSITIVE_PATTERNS[t];
+    if (pat && pat.test(text)) return true;
+  }
+  for (const raw of q.customSensitiveTopics ?? []) {
+    const w = raw.trim();
+    if (!w) continue;
+    if (new RegExp(escapeRegex(w), "i").test(text)) return true;
+  }
+  return false;
+};
+
+// Hide feed items the user has opted out of.
+export const filterSensitiveFeed = <T extends FeedItem>(
+  items: T[],
+  q: StoredQuiz | null,
+): T[] => items.filter((i) => !isBlockedByQuiz(i.title, `${i.blurb} ${i.meta}`, q));
+
+const parseDurationMins = (i: FeedItem): number => {
+  const s = i.duration ?? i.meta ?? "";
+  const m = s.match(/(\d+)/);
+  return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
+};
+
+// Reorder feed items so ones matching the user's available time appear first.
+// "Longer" or no value → no reorder.
+export const rankByTime = <T extends FeedItem>(
+  items: T[],
+  timeEnergy?: string,
+): T[] => {
+  if (!timeEnergy) return items;
+  let threshold: number | null = null;
+  if (/^(A minute|Around 5)/i.test(timeEnergy)) threshold = 5;
+  else if (/^Around 10/i.test(timeEnergy)) threshold = 10;
+  else if (/^(1 minute|5 minutes)$/i.test(timeEnergy)) threshold = 5; // legacy
+  else if (/^10 minutes$/i.test(timeEnergy)) threshold = 10; // legacy
+  if (threshold === null) return items;
+  const t = threshold;
+  const fast: T[] = [];
+  const rest: T[] = [];
+  for (const it of items) (parseDurationMins(it) <= t ? fast : rest).push(it);
+  return [...fast, ...rest];
+};
+
+// Section slots on YourSpace / Exploring.
+export type SectionSlot = "read" | "do" | "talk";
+const PRIORITY_TO_SLOT: Record<string, SectionSlot> = {
+  "Understanding what's going on": "read",
+  "Resources and information": "read",
+  "Practical tools and exercises": "do",
+  "Activities to feel better": "do",
+  "Peer stories and experiences": "talk",
+};
+
+export const sectionOrder = (q: StoredQuiz | null): SectionSlot[] => {
+  const order: SectionSlot[] = [];
+  const seen = new Set<SectionSlot>();
+  for (const p of q?.priorities ?? []) {
+    const slot = PRIORITY_TO_SLOT[p];
+    if (slot && !seen.has(slot)) {
+      order.push(slot);
+      seen.add(slot);
+    }
+  }
+  for (const s of ["read", "do", "talk"] as SectionSlot[]) {
+    if (!seen.has(s)) order.push(s);
+  }
+  return order;
+};
+
 export const themeFromQuiz = (q: StoredQuiz | null): Theme | null => {
   if (!q) return null;
   if (q.isCaregiver) return "Helping someone I love";
@@ -230,7 +325,7 @@ export const themeFromQuiz = (q: StoredQuiz | null): Theme | null => {
     default:
       break;
   }
-  if (q.timeEnergy === "1 minute" || q.timeEnergy === "5 minutes")
+  if (q.timeEnergy && /^(A minute|Around 5|1 minute|5 minutes)/i.test(q.timeEnergy))
     return "I only have a few minutes";
   return null;
 };
@@ -285,41 +380,51 @@ const editorialNote = (type: ItemType, q: StoredQuiz): string => {
 export const personalizedEditorial = (q: StoredQuiz | null): EditorialPick[] => {
   if (!q) return DEFAULT_EDITORIAL;
   const theme = themeFromQuiz(q);
-  const themed = (feed: FeedItem[]) => (theme ? feed.filter((i) => i.themes.includes(theme)) : feed);
-  const read = rankByStyle(themed(READ_FEED), q.supportStyle);
-  const doF = rankByStyle(themed(DO_FEED), q.supportStyle);
-  const talk = rankByStyle(themed(TALK_FEED), q.supportStyle);
+  const themed = (feed: FeedItem[]) => {
+    const safe = filterSensitiveFeed(feed, q);
+    return theme ? safe.filter((i) => i.themes.includes(theme)) : safe;
+  };
+  const order = sectionOrder(q);
+  const feedFor = (s: SectionSlot) =>
+    s === "read" ? READ_FEED : s === "do" ? DO_FEED : TALK_FEED;
   const picks: EditorialPick[] = [];
   const pushFrom = (feed: FeedItem[]) => {
-    const item = feed[0];
+    const ranked = rankByTime(rankByStyle(feed, q.supportStyle), q.timeEnergy);
+    const item = ranked[0];
     if (!item) return;
     if (picks.find((p) => p.id === item.id)) return;
     picks.push({ ...item, note: editorialNote(item.type, q) });
   };
-  // Order picks roughly by support style preference where possible
-  pushFrom(read);
-  pushFrom(doF);
-  pushFrom(talk);
+  for (const slot of order) pushFrom(themed(feedFor(slot)));
   // Ensure at least 3-4 picks
   if (picks.length < 4) {
-    const extra = rankByStyle(themed([...READ_FEED, ...DO_FEED]), q.supportStyle).find(
-      (i) => !picks.find((p) => p.id === i.id),
+    const pool = rankByTime(
+      rankByStyle(themed([...READ_FEED, ...DO_FEED]), q.supportStyle),
+      q.timeEnergy,
     );
+    const extra = pool.find((i) => !picks.find((p) => p.id === i.id));
     if (extra) picks.push({ ...extra, note: editorialNote(extra.type, q) });
   }
   return picks.length ? picks : DEFAULT_EDITORIAL;
 };
 
-// Pick 3 personalized items (one from each feed) with optional offset for "refresh".
+// Pick personalized items, one from each slot in the user's priority order.
 export const buildPersonalPicks = (q: StoredQuiz | null, offset = 0): FeedItem[] => {
   const theme = themeFromQuiz(q);
+  const feedFor = (s: SectionSlot) =>
+    s === "read" ? READ_FEED : s === "do" ? DO_FEED : TALK_FEED;
   const pickFrom = (feed: FeedItem[]): FeedItem | undefined => {
-    const themed = theme ? feed.filter((i) => i.themes.includes(theme)) : feed;
-    const ranked = rankByStyle(themed.length ? themed : feed, q?.supportStyle);
+    const safe = filterSensitiveFeed(feed, q);
+    const themed = theme ? safe.filter((i) => i.themes.includes(theme)) : safe;
+    const ranked = rankByTime(
+      rankByStyle(themed.length ? themed : safe, q?.supportStyle),
+      q?.timeEnergy,
+    );
     if (!ranked.length) return undefined;
     return ranked[offset % ranked.length];
   };
-  return [pickFrom(READ_FEED), pickFrom(DO_FEED), pickFrom(TALK_FEED)].filter(Boolean) as FeedItem[];
+  const order = sectionOrder(q);
+  return order.map((s) => pickFrom(feedFor(s))).filter(Boolean) as FeedItem[];
 };
 
 // A short, situation-aware header for the personal home page.
@@ -419,12 +524,14 @@ export const CAREGIVER_STAGES: CaregiverStage[] = [
   },
 ];
 
-export const stageContent = (stageId: CaregiverStage["id"]): FeedItem[] => {
+export const stageContent = (
+  stageId: CaregiverStage["id"],
+  q: StoredQuiz | null = null,
+): FeedItem[] => {
   const stage = CAREGIVER_STAGES.find((s) => s.id === stageId);
   if (!stage) return [];
-  const all = [...READ_FEED, ...DO_FEED, ...TALK_FEED];
-  const matched = all.filter(stage.match);
-  // dedupe by id, cap at 8
+  const all = filterSensitiveFeed([...READ_FEED, ...DO_FEED, ...TALK_FEED], q);
+  const matched = rankByTime(all.filter(stage.match), q?.timeEnergy);
   const seen = new Set<string>();
   const out: FeedItem[] = [];
   for (const item of matched) {
@@ -475,11 +582,14 @@ export const PATIENT_STAGES: PatientStage[] = [
   },
 ];
 
-export const patientStageContent = (stageId: PatientStage["id"]): FeedItem[] => {
+export const patientStageContent = (
+  stageId: PatientStage["id"],
+  q: StoredQuiz | null = null,
+): FeedItem[] => {
   const stage = PATIENT_STAGES.find((s) => s.id === stageId);
   if (!stage) return [];
-  const all = [...READ_FEED, ...DO_FEED, ...TALK_FEED];
-  const matched = all.filter(stage.match);
+  const all = filterSensitiveFeed([...READ_FEED, ...DO_FEED, ...TALK_FEED], q);
+  const matched = rankByTime(all.filter(stage.match), q?.timeEnergy);
   const seen = new Set<string>();
   const out: FeedItem[] = [];
   for (const item of matched) {

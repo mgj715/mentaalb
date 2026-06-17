@@ -16,9 +16,12 @@ import {
   type EditorialPick,
   interleave,
   filterByThemeAndQuery,
+  filterSensitiveFeed,
   personalizedEditorial,
   themeFromQuiz,
   rankByStyle,
+  rankByTime,
+  sectionOrder,
 } from "@/lib/exploring-data";
 
 const TYPE_STYLES: Record<ItemType, { tone: string; chipTone: string; Icon: typeof BookOpen }> = {
@@ -130,24 +133,29 @@ const Exploring = () => {
   }, [personalizedTheme]);
 
   const supportStyle = quiz?.supportStyle;
+  const timeEnergy = quiz?.timeEnergy;
 
   const editorialPicks = useMemo<EditorialPick[]>(() => {
     const base = quiz ? personalizedEditorial(quiz) : DEFAULT_EDITORIAL;
-    return filterByThemeAndQuery(base, query, activeTheme);
+    return filterByThemeAndQuery(filterSensitiveFeed(base, quiz), query, activeTheme);
   }, [query, activeTheme, quiz]);
 
-  const readItems = useMemo(
-    () => rankByStyle(interleave(filterByThemeAndQuery(READ_FEED, query, activeTheme)), supportStyle),
-    [query, activeTheme, supportStyle],
-  );
-  const doItems = useMemo(
-    () => rankByStyle(interleave(filterByThemeAndQuery(DO_FEED, query, activeTheme)), supportStyle),
-    [query, activeTheme, supportStyle],
-  );
-  const talkItems = useMemo(
-    () => rankByStyle(interleave(filterByThemeAndQuery(TALK_FEED, query, activeTheme)), supportStyle),
-    [query, activeTheme, supportStyle],
-  );
+  const rankFeed = (feed: FeedItem[]) =>
+    rankByTime(
+      rankByStyle(interleave(filterByThemeAndQuery(filterSensitiveFeed(feed, quiz), query, activeTheme)), supportStyle),
+      timeEnergy,
+    );
+
+  const readItems = useMemo(() => rankFeed(READ_FEED), [query, activeTheme, supportStyle, timeEnergy, quiz]);
+  const doItems = useMemo(() => rankFeed(DO_FEED), [query, activeTheme, supportStyle, timeEnergy, quiz]);
+  const talkItems = useMemo(() => rankFeed(TALK_FEED), [query, activeTheme, supportStyle, timeEnergy, quiz]);
+
+  const slotOrder = useMemo(() => sectionOrder(quiz), [quiz]);
+  const slotConfig: Record<"read" | "do" | "talk", { title: string; items: FeedItem[]; href: string; empty: string }> = {
+    read: { title: "Something to read or watch", items: readItems, href: "/resources", empty: "Nothing matches this theme yet — try another." },
+    do: { title: "Something to do", items: doItems, href: "/tools", empty: "No practices match yet — try another theme." },
+    talk: { title: "Someone to talk to", items: talkItems, href: "/forums", empty: "No spaces match this theme yet — try another." },
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
@@ -290,27 +298,19 @@ const Exploring = () => {
           </section>
         )}
 
-        <Row
-          title="Something to read or watch"
-          items={readItems}
-          seeAllHref="/resources"
-          emptyHint="Nothing matches this theme yet — try another."
-          navigate={navigate}
-        />
-        <Row
-          title="Something to do"
-          items={doItems}
-          seeAllHref="/tools"
-          emptyHint="No practices match yet — try another theme."
-          navigate={navigate}
-        />
-        <Row
-          title="Someone to talk to"
-          items={talkItems}
-          seeAllHref="/forums"
-          emptyHint="No spaces match this theme yet — try another."
-          navigate={navigate}
-        />
+        {slotOrder.map((slot) => {
+          const cfg = slotConfig[slot];
+          return (
+            <Row
+              key={slot}
+              title={cfg.title}
+              items={cfg.items}
+              seeAllHref={cfg.href}
+              emptyHint={cfg.empty}
+              navigate={navigate}
+            />
+          );
+        })}
       </main>
       <Footer />
     </div>
