@@ -66,8 +66,9 @@ const Card = ({ item }: { item: FeedItem }) => {
 const PatientStage = () => {
   const { stage } = useParams<{ stage: string }>();
   const navigate = useNavigate();
+  const quiz = useMemo(() => loadQuiz(), []);
   const meta = useMemo(() => PATIENT_STAGES.find((s) => s.id === stage), [stage]);
-  const items = useMemo(() => (meta ? patientStageContent(meta.id) : []), [meta]);
+  const items = useMemo(() => (meta ? patientStageContent(meta.id, quiz) : []), [meta, quiz]);
 
   useEffect(() => {
     if (meta) markPatientStageVisited(meta.id);
