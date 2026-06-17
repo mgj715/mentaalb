@@ -133,24 +133,29 @@ const Exploring = () => {
   }, [personalizedTheme]);
 
   const supportStyle = quiz?.supportStyle;
+  const timeEnergy = quiz?.timeEnergy;
 
   const editorialPicks = useMemo<EditorialPick[]>(() => {
     const base = quiz ? personalizedEditorial(quiz) : DEFAULT_EDITORIAL;
-    return filterByThemeAndQuery(base, query, activeTheme);
+    return filterByThemeAndQuery(filterSensitiveFeed(base, quiz), query, activeTheme);
   }, [query, activeTheme, quiz]);
 
-  const readItems = useMemo(
-    () => rankByStyle(interleave(filterByThemeAndQuery(READ_FEED, query, activeTheme)), supportStyle),
-    [query, activeTheme, supportStyle],
-  );
-  const doItems = useMemo(
-    () => rankByStyle(interleave(filterByThemeAndQuery(DO_FEED, query, activeTheme)), supportStyle),
-    [query, activeTheme, supportStyle],
-  );
-  const talkItems = useMemo(
-    () => rankByStyle(interleave(filterByThemeAndQuery(TALK_FEED, query, activeTheme)), supportStyle),
-    [query, activeTheme, supportStyle],
-  );
+  const rankFeed = (feed: FeedItem[]) =>
+    rankByTime(
+      rankByStyle(interleave(filterByThemeAndQuery(filterSensitiveFeed(feed, quiz), query, activeTheme)), supportStyle),
+      timeEnergy,
+    );
+
+  const readItems = useMemo(() => rankFeed(READ_FEED), [query, activeTheme, supportStyle, timeEnergy, quiz]);
+  const doItems = useMemo(() => rankFeed(DO_FEED), [query, activeTheme, supportStyle, timeEnergy, quiz]);
+  const talkItems = useMemo(() => rankFeed(TALK_FEED), [query, activeTheme, supportStyle, timeEnergy, quiz]);
+
+  const slotOrder = useMemo(() => sectionOrder(quiz), [quiz]);
+  const slotConfig: Record<"read" | "do" | "talk", { title: string; items: FeedItem[]; href: string; empty: string }> = {
+    read: { title: "Something to read or watch", items: readItems, href: "/resources", empty: "Nothing matches this theme yet — try another." },
+    do: { title: "Something to do", items: doItems, href: "/tools", empty: "No practices match yet — try another theme." },
+    talk: { title: "Someone to talk to", items: talkItems, href: "/forums", empty: "No spaces match this theme yet — try another." },
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col max-w-md md:max-w-2xl lg:max-w-3xl mx-auto bg-background overflow-hidden">
